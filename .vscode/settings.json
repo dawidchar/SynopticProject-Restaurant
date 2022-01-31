@@ -1,0 +1,23 @@
+{
+    "grammarly.overrides": [
+        {
+            "files": [
+                "**/Documentation/feasibility.md"
+            ],
+            "config": {
+                "audience": "expert",
+                "dialect": "british",
+                "domain": "technical",
+                "emotions": [
+                    "confident",
+                    "optimistic",
+                    "analytical"
+                ],
+                "goals": [
+                    "inform",
+                    "describe"
+                ]
+            }
+        }
+    ]
+}
