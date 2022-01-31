@@ -1,0 +1,59 @@
+@startuml User Activity Diagrams
+left to right direction
+
+rectangle "Order Food Online" {
+"User" as a1_2
+(Log In) as s1_2
+(Add Items to cart from Menu) as s2_2
+(Modify Current Order/Basket) as s3_2
+(Place Order) as s4_2
+card "Application Checks Items are in stock/Available" as c1_2
+
+a1_2 --> s1_2
+s1_2 --> s2_2
+s2_2 --> s3_2
+s3_2 --> c1_2
+c1_2 --> s4_2
+
+note top of s1_2
+    After Creating Account
+end note
+}
+
+rectangle "Book Table" {
+"User" as a1_1
+(Fill out booking details) as s1_1
+(Book Table) as s2_1
+
+a1_1 --> s1_1
+s1_1 --> s2_1
+}
+
+rectangle "Modify Menu" {
+"Admin" as a1_3
+(Log In) as s1_3
+(View Current Menu) as s2_3
+(Edit or Remove Exisiting Menu Items) as s3_3
+(Add Menu Items) as s4_3
+(Amend Stock Levels) as s5_3
+
+a1_3 --> s1_3
+s1_3 --> s4_3
+s1_3 --> s2_3
+s2_3 --> s3_3
+s2_3 --> s5_3
+}
+
+rectangle "View Bookings/Orders" {
+"Admin" as a1_5
+(Log In) as s1_5
+(View Current Orders) as s2_5
+(View Current Bookings) as s3_5
+
+a1_5 --> s1_5
+s1_5 --> s2_5
+s1_5 --> s3_5
+}
+
+
+@enduml

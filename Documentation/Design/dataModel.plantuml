@@ -1,0 +1,76 @@
+@startuml DoctorNowPlanDataModel
+package Users <<folder>> {
+    class UserDocument <<(D,orchid)>> {
+        #id: String
+        +name: String
+        +email: String
+        +phoneNumber: String
+        +address: String
+        +admin: Boolean
+    }
+}
+
+package Basket <<folder>> {
+    class UserBasket <<(D,orchid)>> {
+        #id: String
+        +items: Array<BasketItem>
+        +timestamp: DateTime
+        +userId: ID <UserDocument>
+    }
+
+    class BasketItem {
+        +itemId: String
+        +name: String
+        +quantity: Integer
+    }
+}
+
+package Menu <<folder>> {
+    class MenuItemDocument <<(D,orchid)>> {
+        #id: String
+        +name: String
+        +description: String
+        +price: Integer
+        +available: Boolean
+        +categoryId: ID <CategoryDocument>
+    }
+}
+
+package Categories <<folder>> {
+    class CategoryDocument <<(D,orchid)>> {
+        #id: String
+        +name: String
+        +description: String
+    }
+}
+
+package Orders <<folder>> {
+    class OrderDocument <<(D,orchid)>> {
+        #id: String
+        +userId: ID <UserDocument>
+        +items: Array<Item>
+        +total: Integer
+        +timestamp: DateTime
+    }
+
+    class Item {
+        +itemId: String
+        +name: String
+        +quantity: Integer
+        +total: Integer
+    }
+}
+
+package Bookings <<folder>> {
+    class BookingDocument <<(D,orchid)>> {
+        #id: String
+        +name: String
+        +email: String
+        +phoneNumber: String
+        +numberOfPeople: Integer
+        +BookingStart: DateTime
+        +BookingEnd: DateTime
+    }
+}
+
+@enduml

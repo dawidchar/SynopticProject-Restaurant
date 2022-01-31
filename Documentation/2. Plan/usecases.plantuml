@@ -1,0 +1,20 @@
+@startuml Usecases
+skinparam actorStyle awesome
+left to right direction
+
+:User: --> (Use/Navigate the Application)
+:User: --> (Create an account, log in and log out)
+:User: --> (View the Menu)
+:User: --> (Add Items to a basket)
+:User: --> (Amend Items in the basket)
+:User: --> (Order food online)
+:User: --> (Edit Account Details)
+:User: --> (View the Restaurant Details)
+:User: --> (Book a Table)
+
+
+:Admin: --> (Log In and Log Out Securely)
+:Admin: --> (View Orders and Bookings)
+:Admin: --> (Amend Menu Items)
+
+@enduml
