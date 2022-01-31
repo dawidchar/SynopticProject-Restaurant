@@ -6,7 +6,7 @@
       :to="item.path"
       :title="item.tooltip"
       text
-      height="100%"
+      height="95%"
       color="white"
     >
       {{ item.text }}

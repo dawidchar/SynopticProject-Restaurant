@@ -14,6 +14,12 @@ export default Object.freeze({
         { text: 'View Menu', path: '/menu', color: 'primary', tooltip: 'View the Menu' },
         { text: 'Book table', path: '/book', color: 'primary', outlined: true, tooltip: 'Book a Table' }
     ],
+    bookings: {
+        openingTime: '09:00',
+        closingTime: '22:00',
+        bookingTimeInterval: 30,
+        maxNumberOfPeople: 12
+    },
     text: {
         get home_title () {
             return `🍔 Welcome to ${this.parent.restaurantName}! 🌮`
@@ -23,7 +29,11 @@ export default Object.freeze({
         },
         get menu_title () {
             return `🍔 ${this.parent.restaurantName}'s Menu 🌮`
-        }
+        },
+        get book_title () {
+            return `🍔 Book a table at ${this.parent.restaurantName}! 🌮`
+        },
+        book_form_title: 'Book a table 🍴'
     },
     images: {
         home_carousel: [
