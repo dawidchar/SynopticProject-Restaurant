@@ -5,7 +5,6 @@ package Users <<folder>> {
         +name: String
         +email: String
         +phoneNumber: String
-        +address: String
         +admin: Boolean
     }
 }
@@ -31,18 +30,10 @@ package Menu <<folder>> {
         +name: String
         +description: String
         +price: Integer
-        +available: Boolean
-        +categoryId: ID <CategoryDocument>
+        +stock: Integer
     }
 }
 
-package Categories <<folder>> {
-    class CategoryDocument <<(D,orchid)>> {
-        #id: String
-        +name: String
-        +description: String
-    }
-}
 
 package Orders <<folder>> {
     class OrderDocument <<(D,orchid)>> {
@@ -59,6 +50,12 @@ package Orders <<folder>> {
         +quantity: Integer
         +total: Integer
     }
+
+    class Item {
+        +itemId: String
+        +quantity: Integer
+        +total: Integer
+    }
 }
 
 package Bookings <<folder>> {
@@ -68,8 +65,8 @@ package Bookings <<folder>> {
         +email: String
         +phoneNumber: String
         +numberOfPeople: Integer
-        +BookingStart: DateTime
-        +BookingEnd: DateTime
+        +timestampStart: DateTime
+        +timestampEnd: DateTime
     }
 }
 

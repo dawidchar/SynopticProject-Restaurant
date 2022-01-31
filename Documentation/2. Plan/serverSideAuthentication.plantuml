@@ -1,0 +1,45 @@
+@startuml serverSideAuthentication
+box "Browser"
+actor "User" as user
+participant "Indexed DB" as idb
+participant "Auth Service Worker" as sw
+end box
+participant "Nuxt Server" as nuxt
+participant "Firebase Authentication" as auth
+participant "Firestore" as db
+
+group First Ever Visit
+    user -> nuxt : Request Page
+    nuxt -> sw : Register New Service Worker
+    nuxt -> user : Respond with Page
+end
+
+user -> auth : Log in
+auth -> idb : Save Auth Refresh Token
+
+== Next Visit ==
+
+user -> sw : Request Page
+sw -> idb : Requests Auth Refresh Token
+idb -> sw : Responds With \nRefresh Token If Exists
+sw -> auth : Requests Auth Token using Refresh Token
+auth -> sw : Respond With Auth Token
+sw -> nuxt : Request Page \n[With Auth Token In Header]
+nuxt -> db : Request User Data with Auth Token
+db -> auth : Verifies Auth Token
+auth -> db : Reponds if Token is Valid
+alt Valid Auth Token
+    db -> nuxt : Respond with User Data
+else Failure
+    db -> nuxt : Authentication Rejected
+end
+alt Valid Auth Token
+    nuxt -> user : Respond with User Hydrated Data in Page
+else Failure
+    nuxt -> user : Responds With Page (As If user was not signed in)
+end
+
+
+
+
+@enduml
