@@ -25,6 +25,10 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+        '~/plugins/firebase.js',
+        '~/plugins/firestore.js',
+        '~/plugins/init.server.js',
+        '~/plugins/init.client.js'
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -52,7 +56,7 @@ export default {
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
         theme: {
-            dark: true,
+            dark: false,
             themes: {
                 dark: {
                     primary: colors.blue.darken2,
@@ -83,7 +87,7 @@ export default {
 
         workbox: {
             importScripts: [
-                '/sw_test.js'
+                '/dist/sw_firebase_auth.js'
             ],
             dev: process.env.NODE_ENV === 'development'
         }

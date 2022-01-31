@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "npm run webpack && nuxt",
+    "build": "npm run webpack && nuxt build",
+    "start": "npm run webpack && nuxt start",
+    "webpack": "webpack --config=webpack.config.js",
+    "generate": "npm run webpack && nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
     "test": "jest"
@@ -15,6 +16,7 @@
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
     "firebase": "^9.6.3",
+    "firestore-parser": "^0.9.0",
     "nuxt": "^2.15.7",
     "vue-client-only": "^2.1.0",
     "vuetify": "^2.5.5"
@@ -33,6 +35,8 @@
     "eslint-plugin-nuxt": "^2.0.0",
     "eslint-plugin-vue": "^7.12.1",
     "jest": "^27.0.5",
-    "vue-jest": "^3.0.4"
+    "vue-jest": "^3.0.4",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^4.9.1"
   }
 }
