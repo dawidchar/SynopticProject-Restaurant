@@ -33,7 +33,8 @@ export default Object.freeze({
         get book_title () {
             return `🍔 Book a table at ${this.parent.restaurantName}! 🌮`
         },
-        book_form_title: 'Book a table 🍴'
+        book_form_title: 'Book a table 🍴',
+        basket_title: 'Your Basket'
     },
     images: {
         home_carousel: [

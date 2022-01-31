@@ -36,18 +36,12 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 export default {
-    async fetch () {
-        await this.fetchMenu(this)
-    },
     computed: {
         ...mapState(['text', 'images', 'home_buttons']),
         ...mapState('user', { user: 'userData' }),
         ...mapState('menu', { menu: 'items' })
-    },
-    methods: {
-        ...mapActions('menu', ['fetchMenu'])
     }
 }
 </script>

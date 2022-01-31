@@ -3,12 +3,12 @@
     <h2 class="text-center font-weight-regular mb-4">
       Menu Items
     </h2>
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap justify-space-around justify-md-start">
       <menuItemCard
         v-for="item in menuItems"
         :key="item.slug"
-        class="mx-4 my-2 align-self-center"
-        :itemid="item.slug"
+        class="mx-4 my-2 align-stretch"
+        :item-id="item.slug"
         :title="item.name"
         :description="item.description"
         :price="item.price"

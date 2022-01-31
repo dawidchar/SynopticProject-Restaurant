@@ -9,7 +9,10 @@
     <v-row>
       <navbarTitle :text="restaurantName" />
       <desktopMenu :items="navbar.menuButtons" />
-      <desktopProfile :user="user" :items="navbar.profileButtons" />
+      <v-col class="d-flex justify-end py-0">
+        <desktopProfile :user="user" :items="navbar.profileButtons" />
+        <basket />
+      </v-col>
     </v-row>
   </v-app-bar>
 </template>
@@ -19,11 +22,13 @@ import { mapState } from 'vuex'
 import navbarTitle from '~/components/navbar/title.vue'
 import desktopMenu from '~/components/navbar/desktop_menu.vue'
 import desktopProfile from '~/components/navbar/desktop_profile.vue'
+import basket from '~/components/navbar/basket.vue'
 export default {
     components: {
         navbarTitle,
         desktopMenu,
-        desktopProfile
+        desktopProfile,
+        basket
     },
     computed: {
         ...mapState('user', { user: 'userData' }),

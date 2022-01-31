@@ -1,4 +1,5 @@
 import { getDocs } from 'firebase/firestore'
+import formatPrice from '~/utils/priceStringFormatter'
 
 export const state = () => ({
     items: {},
@@ -15,7 +16,11 @@ export const actions = {
             snapshot.forEach((doc) => {
                 const docData = doc.data()
                 if (!docData.slug) { return }
-                menuItems[docData.slug] = { ...docData, id: doc.id }
+                const data = { ...docData, id: doc.id }
+                if (data.price) { data.priceString = formatPrice(data.price) }
+
+                // TODO - Change slug to itemId
+                menuItems[docData.slug] = data
             })
 
             commit('UPDATE_MENU_ITEMS', menuItems)

@@ -14,8 +14,14 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
-
+    async fetch () {
+        await this.fetchMenu(this)
+    },
+    methods: {
+        ...mapActions('menu', ['fetchMenu'])
+    }
 }
 </script>
 

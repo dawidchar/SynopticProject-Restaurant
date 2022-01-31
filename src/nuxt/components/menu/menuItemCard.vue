@@ -1,5 +1,5 @@
 <template>
-  <v-card width="275" class="menu-card">
+  <v-card width="275" class="menu-card d-flex flex-column">
     <v-card-title class="pb-0">
       {{ title }}
     </v-card-title>
@@ -8,7 +8,7 @@
         {{ description }}
       </div>
     </v-card-text>
-    <v-card-actions class="px-3">
+    <v-card-actions class="px-3 mt-auto">
       <div class="text-subtitle-1 pt-1">
         {{ priceString }}
       </div>
@@ -16,6 +16,7 @@
         color="secondary"
         class="white--text ml-auto"
         small
+        @click="addToBasket"
       >
         Add <v-icon right>
           mdi-cart-plus
@@ -26,6 +27,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import formatPrice from '~/utils/priceStringFormatter'
 export default {
     props: {
         title: {
@@ -36,7 +39,7 @@ export default {
             type: String,
             default: ''
         },
-        itemid: {
+        itemId: {
             type: String,
             required: true
         },
@@ -47,7 +50,13 @@ export default {
     },
     computed: {
         priceString () {
-            return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(this.price / 100)
+            return formatPrice(this.price)
+        }
+    },
+    methods: {
+        ...mapActions('basket', ['updateItem']),
+        addToBasket () {
+            this.updateItem({ itemId: this.itemId, delta: 1 })
         }
     }
 }
