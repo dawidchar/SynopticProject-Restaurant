@@ -1,5 +1,6 @@
 export default Object.freeze({
     restaurantName: 'Restaurant',
+    restaurantSupportEmail: 'support@restaurant.com',
     navbar: {
         menuButtons: [
             { text: 'Menu', path: '/menu', tooltip: 'View the Menu' },
@@ -32,6 +33,12 @@ export default Object.freeze({
         },
         get book_title () {
             return `🍔 Book a table at ${this.parent.restaurantName}! 🌮`
+        },
+        get contact_title () {
+            return `🍔 Contact ${this.parent.restaurantName} 🌮`
+        },
+        get contact_description () {
+            return `Hi! If you'd like to contact us, feel free to send an email to ${this.parent.restaurantSupportEmail}`
         },
         book_form_title: 'Book a table 🍴',
         basket_title: 'Your Basket'
