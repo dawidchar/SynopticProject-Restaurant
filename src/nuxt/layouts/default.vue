@@ -1,8 +1,15 @@
 <template>
   <v-app>
-    <navbar title="Restaurant" user-name="TEST User" />
-    <div style="height: 100px"></div>
-    <Nuxt />
+    <navbar />
+    <v-main>
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="11">
+            <Nuxt />
+          </v-col>
+        </v-row>
+      </v-container>
+    </v-main>
   </v-app>
 </template>
 
