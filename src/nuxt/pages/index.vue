@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO - Make the title a shared component -->
   <div class="pt-2">
     <h1 class="text-center">
       {{ text.home_title }}

@@ -102,7 +102,7 @@
 <script>
 import { mapState } from 'vuex'
 import timeSlots from '~/utils/timeSlots'
-import rules from '~/utils/formValidationRules'
+import validationRules from '~/utils/formValidationRules'
 export default {
     props: {
         loading: {
@@ -123,7 +123,7 @@ export default {
     computed: {
         ...mapState(['text', 'bookings']),
         rules () {
-            return rules
+            return validationRules
         },
         numOfPeopleList () {
             return Array(this.bookings.maxNumberOfPeople).fill().map(

@@ -6,5 +6,5 @@ export default {
     maxNum: max => v => v <= max || `Number must be smaller than ${max}`,
     email: () => v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
     phone: () => v => /^((\+(\d{2}))|(0)) ?\d{4} ?\d{6}$/.test(v) || 'Phone Number must be valid',
-    match: (matchName, match) => v => v === match || `${matchName} Must Match`
+    match: (match, matchName = 'Fields') => v => v === match || `${matchName} Must Match`
 }

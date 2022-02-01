@@ -8,7 +8,7 @@ const fetchUser = ({ req, $axios }) => {
         return $axios.$get(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/users/${firebaseUser.uid}`, {
             headers: { Authorization: `Bearer ${firebaseUser.token}` }
         }).then((userData) => {
-            return ({ user: { ...firebaseUser, ...FireStoreParser(userData.fields) }, validated: true })
+            return ({ user: { ...FireStoreParser(userData.fields), ...firebaseUser }, validated: true })
         }).catch((e) => {
             console.error('Failed to Fetch User - Server:', e.message)
         })
@@ -16,6 +16,7 @@ const fetchUser = ({ req, $axios }) => {
 }
 
 export default async ({ req, $axios, store: { dispatch } }) => {
-    const user = await fetchUser({ req, $axios })
-    dispatch('user/updateUser', user)
+    await fetchUser({ req, $axios }).then((user) => {
+        dispatch('user/updateUser', user)
+    })
 }

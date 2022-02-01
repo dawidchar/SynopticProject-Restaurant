@@ -2,12 +2,12 @@ import { onAuthStateChanged } from 'firebase/auth'
 import { getDoc } from 'firebase/firestore'
 import getUserData from '~/utils/extractUserFromAuthUser'
 
-const fetchUser = ({ $auth, $db, $firestore }, cb) => {
+const fetchUser = ({ $auth, $firestore }, cb) => {
     onAuthStateChanged($auth, (authUser) => {
         if (authUser) {
             getDoc($firestore.doc.user(authUser.uid)).then((userDoc) => {
                 if (userDoc.exists()) {
-                    const payload = { user: { ...getUserData(authUser), ...userDoc.data() }, validated: true }
+                    const payload = { user: { ...userDoc.data(), ...getUserData(authUser) }, validated: true }
                     cb(payload)
                 }
             }).catch((e) => {
@@ -17,8 +17,8 @@ const fetchUser = ({ $auth, $db, $firestore }, cb) => {
     })
 }
 
-export default ({ $auth, $db, $firestore, store: { dispatch } }) => {
-    fetchUser({ $auth, $db, $firestore }, (payload) => {
+export default ({ $auth, $firestore, store: { dispatch } }) => {
+    fetchUser({ $auth, $firestore }, (payload) => {
         dispatch('user/updateUser', payload)
     })
 }

@@ -1,5 +1,6 @@
 export const state = () => ({
     userData: {},
+    uid: '',
     validated: false
 })
 
@@ -13,6 +14,7 @@ export const actions = {
 export const mutations = {
     UPDATE_USER_DATA (state, payload) {
         state.userData = payload
+        state.uid = payload.uid || state.uid
     },
     UPDATE_USER_VALIDATION (state, payload) {
         state.validated = payload

@@ -41,7 +41,8 @@ export default Object.freeze({
             return `Hi! If you'd like to contact us, feel free to send an email to ${this.parent.restaurantSupportEmail}`
         },
         book_form_title: 'Book a table 🍴',
-        basket_title: 'Your Basket'
+        basket_title: 'Your Basket',
+        profile_title: 'Your Profile'
     },
     images: {
         home_carousel: [
