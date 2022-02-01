@@ -14,13 +14,13 @@
         </h4>
       </template>
       <v-list>
-        <v-list-item v-for="(item, index) in items" :key="index" link @click="onClick(item.action)">
-          <nuxt-link :is="item.path ? 'router-link' : 'span'" :to="item.path">
+        <nuxt-link :is="item.path ? 'router-link' : 'span'" v-for="(item, index) in items" :key="index" :to="item.path" @click="onClick(item.action)">
+          <v-list-item link>
             <v-list-item-title :class="`${item.color || 'blue'}--text`">
               {{ item.text }}
             </v-list-item-title>
-          </nuxt-link>
-        </v-list-item>
+          </v-list-item>
+        </nuxt-link>
       </v-list>
     </v-menu>
 

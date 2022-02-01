@@ -8,19 +8,17 @@
       {{ text.home_description }}
     </h3>
     <v-divider class="mb-5 mt-1" />
-    <v-row justify="center" class="mt-4">
-      <v-col cols="8">
-        <v-carousel height="400" cycle class="rounded-xl">
-          <v-carousel-item
-            v-for="(item,i) in images.home_carousel"
-            :key="i"
-            :src="item"
-          />
-        </v-carousel>
-      </v-col>
-    </v-row>
+    <v-responsive class="mx-auto pa-1" :aspect-ratio="16/9" max-width="800px">
+      <v-carousel height="400" cycle class="rounded-xl">
+        <v-carousel-item
+          v-for="(item,i) in images.home_carousel"
+          :key="i"
+          :src="item"
+        />
+      </v-carousel>
+    </v-responsive>
     <v-row justify="center" class="mt-8">
-      <v-col cols="8" class="d-flex justify-space-around">
+      <v-col cols="12" md="8" class="d-flex justify-space-around">
         <v-btn
           v-for="item in home_buttons"
           :key="item.text"

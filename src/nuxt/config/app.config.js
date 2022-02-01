@@ -23,27 +23,37 @@ export default Object.freeze({
         maxNumberOfPeople: 12
     },
     text: {
+        // Home
         get home_title () {
             return `🍔 Welcome to ${this.parent.restaurantName}! 🌮`
         },
         get home_description () {
             return `Here at ${this.parent.restaurantName} we serve you the best food!`
         },
+        // Menu
         get menu_title () {
             return `🍔 ${this.parent.restaurantName}'s Menu 🌮`
         },
+        // Booking
         get book_title () {
             return `🍔 Book a table at ${this.parent.restaurantName}! 🌮`
         },
+        book_form_title: 'Book a table 🍴',
+        // Contact Us
         get contact_title () {
             return `🍔 Contact ${this.parent.restaurantName} 🌮`
         },
         get contact_description () {
             return `Hi! If you'd like to contact us, feel free to send an email to ${this.parent.restaurantSupportEmail}`
         },
-        book_form_title: 'Book a table 🍴',
+        // Basket
         basket_title: 'Your Basket',
-        profile_title: 'Your Profile'
+        // Profile
+        profile_title: 'Your Profile',
+        // Login
+        login_title: 'Log In 🍟',
+        // Register
+        register_title: 'Register 🍦'
     },
     images: {
         home_carousel: [

@@ -16,7 +16,7 @@
           required
         />
 
-        <v-col cols="8">
+        <v-col cols="8" md="6">
           <v-text-field
             v-model="phoneNumber"
             label="Phone Number"
@@ -91,7 +91,7 @@ export default {
     },
     methods: {
         updateProfile () {
-            if (this.$refs.form.validate()) {
+            if (this.$refs.form.validate() && !this.loading) {
                 this.loading = true
                 updateUserDetails(this,
                     { name: this.name, phoneNumber: this.phoneNumber })

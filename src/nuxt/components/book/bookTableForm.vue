@@ -16,7 +16,7 @@
           required
         />
 
-        <v-col cols="6">
+        <v-col cols="8" md="6">
           <v-text-field
             v-model="phoneNumber"
             :rules="[rules.required(), rules.phone()]"
@@ -32,7 +32,7 @@
           required
         />
 
-        <v-col cols="6">
+        <v-col cols="8" md="6">
           <v-select
             v-model="numberOfPeople"
             :rules="[rules.required()]"
@@ -44,7 +44,7 @@
           />
         </v-col>
 
-        <v-col cols="6">
+        <v-col cols="8" md="6">
           <v-text-field
             v-model="date"
             label="Date*"
@@ -72,7 +72,7 @@
           </v-dialog>
         </v-col>
 
-        <v-col cols="6">
+        <v-col cols="8" md="6">
           <v-select
             v-model="time"
             :rules="[rules.required()]"

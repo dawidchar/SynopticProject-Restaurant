@@ -1,6 +1,7 @@
 const errorCodeLookup = {
     'auth/wrong-password': 'Incorrect Password',
-    'auth/too-many-requests': 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.'
+    'auth/too-many-requests': 'Access to this account has been temporarily disabled due to many failed login attempts. You can immediately restore it by resetting your password or you can try again later.',
+    'auth/user-not-found': 'We could not find your account'
 }
 
 export default (e) => {

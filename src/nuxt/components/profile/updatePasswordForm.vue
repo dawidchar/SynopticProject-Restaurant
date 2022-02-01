@@ -90,7 +90,7 @@ export default {
     },
     methods: {
         updateProfile () {
-            if (this.$refs.form.validate()) {
+            if (this.$refs.form.validate() && !this.loading) {
                 this.loading = true
                 updateUserPassword(this, {
                     currentPassword: this.currentPassword,

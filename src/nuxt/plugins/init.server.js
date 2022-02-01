@@ -13,10 +13,11 @@ const fetchUser = ({ req, $axios }) => {
             console.error('Failed to Fetch User - Server:', e.message)
         })
     }
+    return Promise.reject(new Error('User Not Signed In'))
 }
 
 export default async ({ req, $axios, store: { dispatch, commit } }) => {
     await fetchUser({ req, $axios }).then((user) => {
         dispatch('user/updateUser', user)
-    })
+    }).catch(() => {})
 }
