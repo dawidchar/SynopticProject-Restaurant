@@ -7,7 +7,7 @@ const fetchUser = ({ $auth, $firestore }, cb) => {
         if (authUser) {
             getDoc($firestore.doc.user(authUser.uid)).then((userDoc) => {
                 if (userDoc.exists()) {
-                    const payload = { user: { ...userDoc.data(), ...getUserData(authUser) }, validated: true }
+                    const payload = { ...userDoc.data(), ...getUserData(authUser) }
                     cb(payload)
                 }
             }).catch((e) => {

@@ -1,9 +1,7 @@
 import Vue from 'vue'
 
 export const state = () => ({
-    items: {
-        burger: { itemId: 'burger', quantity: 2 }
-    }
+    items: {}
 })
 
 export const actions = {

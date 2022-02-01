@@ -4,6 +4,10 @@ const errorCodeLookup = {
 }
 
 export default (e) => {
-    const friendlyError = errorCodeLookup[e.code]
+    let friendlyError
+    if (e.code) {
+        friendlyError = errorCodeLookup[e.code]
+    }
+
     return friendlyError || e.message || ''
 }

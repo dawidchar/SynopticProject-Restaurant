@@ -8,7 +8,8 @@ export default Object.freeze({
             { text: 'Contact', path: '/contact', tooltip: 'Contact Us' }
         ],
         profileButtons: [
-            { text: 'View Profile', path: '/profile' }
+            { text: 'View Profile', path: '/profile' },
+            { text: 'Log Out', color: 'red', action: 'user/logout' }
         ]
     },
     home_buttons: [

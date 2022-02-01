@@ -1,22 +1,23 @@
+// import { signOut } from 'firebase/auth'
+
 export const state = () => ({
-    userData: {},
-    uid: '',
-    validated: false
+    userData: {}
 })
 
 export const actions = {
     updateUser ({ commit }, payload) {
-        if (payload.user) { commit('UPDATE_USER_DATA', payload.user) }
-        if (payload.validated) { commit('UPDATE_USER_VALIDATION', payload.validated) }
+        commit('UPDATE_USER_DATA', payload)
+    },
+    logout ({ commit }, { $auth }) {
+        console.log('SIGN OUT')
+        if (!$auth) { throw new Error('VueX: User Logout - Missing $auth') }
+        // await signOut()
+        commit('UPDATE_USER_DATA', {})
     }
 }
 
 export const mutations = {
     UPDATE_USER_DATA (state, payload) {
         state.userData = payload
-        state.uid = payload.uid || state.uid
-    },
-    UPDATE_USER_VALIDATION (state, payload) {
-        state.validated = payload
     }
 }

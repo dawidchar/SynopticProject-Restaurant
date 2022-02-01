@@ -83,6 +83,11 @@ export default {
         this.phoneNumber = this.userData.phoneNumber
         this.email = this.userData.email
     },
+    errorCaptured (e) {
+        this.loading = false
+        this.$emit('error', { title: 'Error Updating Password', subtitle: friendlyError(e), e })
+        return false
+    },
     methods: {
         updateProfile () {
             if (this.$refs.form.validate()) {

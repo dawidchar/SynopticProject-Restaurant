@@ -5,6 +5,7 @@
     :items="basketMenuItems"
     :mobile-breakpoint="mobileBreakpoint"
     :items-per-page="-1"
+    :loading="loading"
     hide-default-footer
     class="elevation-1"
   >
@@ -56,7 +57,10 @@ export default {
         mobileBreakpoint: 0
     }),
     computed: {
-        ...mapGetters(['basketMenuItems', 'basketTotal'])
+        ...mapGetters(['basketMenuItems', 'basketTotal']),
+        loading () {
+            return process.server
+        }
     },
     mounted () {
         // Enable Mobile View after fixing SSR // 600 - Default Value

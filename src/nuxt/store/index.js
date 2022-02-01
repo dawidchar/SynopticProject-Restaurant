@@ -3,7 +3,9 @@ import formatPrice from '~/utils/priceStringFormatter'
 
 export const state = () => ({
     ...appConfig
+
 })
+
 export const getters = {
     basketMenuItems (state) {
         return Object.values(state.basket.items)
@@ -23,4 +25,9 @@ export const getters = {
     }
 }
 export const actions = {}
-export const mutations = {}
+
+export const mutations = {
+    ADD_MENU_BUTTONS (state, payload) {
+        state.navbar?.menuButtons?.push(payload)
+    }
+}

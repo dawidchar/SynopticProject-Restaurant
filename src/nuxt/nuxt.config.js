@@ -26,10 +26,11 @@ export default {
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
-        '~/plugins/firebase.js',
-        '~/plugins/firestore.js',
-        '~/plugins/init.server.js',
-        '~/plugins/init.client.js'
+        { src: '~/plugins/firebase.js' },
+        { src: '~/plugins/firestore.js' },
+        { src: '~/plugins/init.server.js' },
+        { src: '~/plugins/init.client.js' },
+        { src: '~/plugins/persistedState.js', mode: 'client' }
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
