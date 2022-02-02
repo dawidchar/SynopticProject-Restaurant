@@ -2,3 +2,16 @@ a {
     color: black;
     text-decoration: none; /* no underline */
 }
+
+
+// Fix Change of Font Not Aligning Correctly
+.v-btn {
+    line-height: 0.8;
+    margin-bottom: -2px;
+}
+
+span {
+    line-height: 0.8;
+    margin-bottom: -3px;
+}
+//--------------------------------------//

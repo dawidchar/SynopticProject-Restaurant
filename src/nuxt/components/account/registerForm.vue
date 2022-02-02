@@ -61,7 +61,7 @@
           :loading="loading"
           @click="login"
         >
-          Login
+          Register
         </v-btn>
       </v-row>
     </v-form>

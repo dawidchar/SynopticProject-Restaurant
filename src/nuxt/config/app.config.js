@@ -1,4 +1,5 @@
-import colors from 'vuetify/es5/util/colors'
+// import colors from 'vuetify/es5/util/colors'
+import colorScheme from '~/config/colorScheme'
 
 export default Object.freeze({
     restaurantName: 'Restaurant',
@@ -72,13 +73,9 @@ export default Object.freeze({
         profileButton: { text: 'Admin Menu', color: 'text--darken-4 amber', path: '/admin' },
         colorTheme: {
             light: {
-                primary: colors.green,
-                accent: colors.green.darken3
+                primary: colorScheme.restaurant_red
             },
-            dark: {
-                primary: colors.green.darken2,
-                accent: colors.green.darken3
-            }
+            get dark () { return this.light }
         },
         dataTable: {
             shopNumberOfLastOrders: 21,

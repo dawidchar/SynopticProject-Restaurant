@@ -3,7 +3,7 @@
     <v-btn x-small icon color="red" @click="$emit('removeItem')">
       <v-icon>mdi-minus</v-icon>
     </v-btn>
-    <span class="text-center mx-2 font-weight-bold">
+    <span class="text-center mx-2 pt-1 font-weight-bold">
       {{ quantity }}
     </span>
     <v-btn x-small icon color="green" @click="$emit('addItem')">

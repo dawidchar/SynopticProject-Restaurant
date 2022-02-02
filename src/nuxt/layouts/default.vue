@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <navbar />
-    <v-main>
+    <v-main class="mainContainer">
       <v-container>
         <v-row justify="center">
           <v-col cols="11">
@@ -33,6 +33,10 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
+.mainContainer {
+  background-color: $restaurant-white;
+}
 
 </style>

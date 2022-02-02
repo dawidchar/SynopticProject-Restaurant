@@ -90,7 +90,7 @@
         :loading="loading"
         @click="bookTable"
       >
-        Book a Table
+        <span>Book a Table</span>
         <v-icon right>
           mdi-silverware-fork-knife
         </v-icon>

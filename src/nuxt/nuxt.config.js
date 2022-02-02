@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import colorScheme from './config/colorScheme'
 
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
@@ -57,9 +58,16 @@ export default {
     // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
     vuetify: {
         customVariables: ['~/assets/variables.scss'],
+        treeShake: true,
         theme: {
             dark: false,
+            customProperties: true,
             themes: {
+                light: {
+                    primary: colorScheme.restaurant_turquoise,
+                    secondary: colorScheme.restaurant_navy,
+                    accent: colorScheme.restaurant_gold
+                },
                 dark: {
                     primary: colors.blue.darken2,
                     accent: colors.grey.darken3,
@@ -69,6 +77,11 @@ export default {
                     error: colors.deepOrange.accent4,
                     success: colors.green.accent3
                 }
+            }
+        },
+        defaultAssets: {
+            font: {
+                family: 'Palatino'
             }
         }
     },
