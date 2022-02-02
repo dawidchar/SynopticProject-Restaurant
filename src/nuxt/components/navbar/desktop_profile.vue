@@ -1,7 +1,7 @@
 <template>
-  <div class="d-flex align-center mr-4" :style="{cursor: !!user ? 'default' : 'pointer'}">
+  <div class="d-flex align-center mr-4" :style="{cursor: loggedIn ? 'default' : 'pointer'}">
     <v-menu
-      v-if="userExists"
+      v-if="loggedIn"
       offset-y
       open-on-hover
       rounded="b-lg"
@@ -15,7 +15,7 @@
         </h4>
       </template>
       <v-list>
-        <nuxt-link :is="item.path ? 'router-link' : 'span'" v-for="(item, index) in items" :key="index" :to="item.path" @click="onClick(item.action)">
+        <nuxt-link :is="item.path ? 'router-link' : 'span'" v-for="(item, index) in profileButtons" :key="index" :to="item.path" @click="onClick(item.action)">
           <v-list-item link>
             <v-list-item-title :class="`${item.color || 'info'}--text`">
               {{ item.text }}
@@ -34,39 +34,9 @@
 </template>
 
 <script>
+import navbarProfileButtonsMixin from '~/mixins/navbarProfileButtons.mixin'
 export default {
-    props: {
-        user: {
-            type: Object,
-            default: () => ({})
-        },
-        loggedIn: {
-            type: Boolean,
-            default: false
-        },
-        items: {
-            type: Array,
-            default: () => ([])
-        }
-    },
-    computed: {
-        userExists () {
-            return this.loggedIn
-        },
-        userName () {
-            return this.user?.name.split(' ')[0] || ''
-        },
-        adminText () {
-            return this.user.admin ? '- (Admin)' : ''
-        }
-    },
-    methods: {
-        onClick (action) {
-            if (action) {
-                this.$store.dispatch(action, this)
-            }
-        }
-    }
+    mixins: [navbarProfileButtonsMixin]
 }
 </script>
 

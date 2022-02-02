@@ -1,7 +1,7 @@
 <template>
   <v-col class="d-flex justify-space-between py-0">
     <v-btn
-      v-for="item in items"
+      v-for="item in menuButtons"
       :key="item.text"
       :to="item.path"
       :title="item.tooltip"
@@ -15,13 +15,9 @@
 </template>
 
 <script>
+import navbarMenuButtonsMixin from '~/mixins/navbarMenuButtons.mixin'
 export default {
-    props: {
-        items: {
-            type: Array,
-            required: true
-        }
-    }
+    mixins: [navbarMenuButtonsMixin]
 }
 </script>
 

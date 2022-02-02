@@ -1,6 +1,7 @@
 <template>
   <v-app>
-    <navbar />
+    <navbar @drawerUpdate="drawer = !drawer" />
+    <mobileMenuDrawer :show="drawer" @updateShow="(val) => drawer = val" />
     <v-main class="mainContainer">
       <v-container>
         <v-row justify="center">
@@ -14,8 +15,11 @@
 </template>
 
 <script>
+import mobileMenuDrawer from '~/components/navbar/mobile_menuDrawer.vue'
 export default {
-    middleware: 'adminAuth'
+    components: { mobileMenuDrawer },
+    middleware: 'adminAuth',
+    data: () => ({ drawer: false })
 }
 </script>
 

@@ -32,10 +32,10 @@ export default async (context) => {
 
     if (user) {
         dispatch('user/updateUser', user)
-        if (checkIfUserIsAdmin(user)) { dispatch('enableAdminMode', context) }
+        if (checkIfUserIsAdmin(user)) { await dispatch('enableAdminMode', context) }
 
         const userBasket = await fetchUserBasket(context, user)
-        if (userBasket) { dispatch('basket/hydrateBasketFromDB', userBasket) }
+        if (userBasket) { await dispatch('basket/hydrateBasketFromDB', userBasket) }
     }
 
     await dispatch('menu/fetchMenu', context)
