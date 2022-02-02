@@ -1,7 +1,8 @@
 import { signOut } from 'firebase/auth'
 
 export const state = () => ({
-    userData: {}
+    userData: {},
+    admin: false
 })
 
 export const actions = {
@@ -11,6 +12,9 @@ export const actions = {
     updateUserData ({ state, commit }, payload) {
         const mergedUserData = { ...state.userData, ...payload }
         commit('UPDATE_USER_DATA', mergedUserData)
+    },
+    updateAdminState ({ commit }, payload) {
+        commit('UPDATE_ADMIN_STATE', payload)
     },
     async logout ({ commit }, { $auth, $router }) {
         if (!$auth) { throw new Error('VueX: User Logout - Missing $auth') }
@@ -23,5 +27,8 @@ export const actions = {
 export const mutations = {
     UPDATE_USER_DATA (state, payload) {
         state.userData = payload
+    },
+    UPDATE_ADMIN_STATE (state, payload) {
+        state.admin = payload
     }
 }

@@ -6,9 +6,9 @@
     <div class="d-flex flex-wrap justify-space-around justify-md-start">
       <menuItemCard
         v-for="item in menuItems"
-        :key="item.slug"
+        :key="item.itemId"
         class="mx-4 my-2 align-stretch"
-        :item-id="item.slug"
+        :item-id="item.itemId"
         :title="item.name"
         :description="item.description"
         :price="item.price"

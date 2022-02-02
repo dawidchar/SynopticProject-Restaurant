@@ -1,3 +1,5 @@
+import colors from 'vuetify/es5/util/colors'
+
 export default Object.freeze({
     restaurantName: 'Restaurant',
     restaurantSupportEmail: 'support@restaurant.com',
@@ -20,6 +22,7 @@ export default Object.freeze({
         openingTime: '09:00',
         closingTime: '22:00',
         bookingTimeInterval: 30,
+        bookingDuration: 90,
         maxNumberOfPeople: 12
     },
     text: {
@@ -53,7 +56,9 @@ export default Object.freeze({
         // Login
         login_title: 'Log In 🍟',
         // Register
-        register_title: 'Register 🍦'
+        register_title: 'Register 🍦',
+        // Admin
+        admin_title: 'Admin Area 🧙'
     },
     images: {
         home_carousel: [
@@ -62,6 +67,23 @@ export default Object.freeze({
             'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
             'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
         ]
+    },
+    admin_config: {
+        profileButton: { text: 'Admin Menu', color: 'text--darken-4 amber', path: '/admin' },
+        colorTheme: {
+            light: {
+                primary: colors.green,
+                accent: colors.green.darken3
+            },
+            dark: {
+                primary: colors.green.darken2,
+                accent: colors.green.darken3
+            }
+        },
+        dataTable: {
+            shopNumberOfLastOrders: 21,
+            showBookingsDaysAhead: 2
+        }
     },
     init () {
         this.text.parent = this

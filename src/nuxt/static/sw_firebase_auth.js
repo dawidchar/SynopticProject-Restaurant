@@ -3,15 +3,12 @@ import { getAuth, onAuthStateChanged, getIdToken } from 'firebase/auth'
 import firebaseConfig from '~/config/firebase.config.js'
 import getUserData from '~/utils/extractUserFromAuthUser'
 
+// https://firebase.google.com/docs/auth/web/service-worker-sessions
+
 initializeApp(firebaseConfig)
 
 const auth = getAuth()
 
-/**
- * Returns a promise that resolves with an ID token if available.
- * @return {!Promise<?string>} The promise that resolves with an ID token if
- *     available. Otherwise, the promise resolves with null.
- */
 const getFirebaseUserPromise = () => {
     return new Promise((resolve) => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -32,8 +29,7 @@ const getFirebaseUserPromise = () => {
     })
 }
 
-// eslint-disable-next-line require-await
-const fetchWithAuthorization = async (original, firebaseUser) => {
+const fetchWithAuthorization = (original, firebaseUser) => {
     // Clone headers as request headers are immutable.
     const headers = new Headers()
     for (const entry of original.headers.entries()) {
@@ -63,6 +59,7 @@ self.addEventListener('fetch', (event) => {
     const isSameOrigin = self.location.origin === url.origin
     const isHttps = (self.location.protocol === 'https:' || self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1')
 
+    // Only add fireauth token header to requests made to the server
     if (!expectsHTML || !isSameOrigin || !isHttps) {
         event.respondWith(fetch(event.request))
 

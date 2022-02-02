@@ -1,6 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth'
 import { getDoc } from 'firebase/firestore'
 import getUserData from '~/utils/extractUserFromAuthUser'
+import checkIfUserIsAdmin from '~/utils/checkIfUserIsAdmin'
 
 const fetchUser = ({ $auth, $firestore }, cb) => {
     onAuthStateChanged($auth, (authUser) => {
@@ -17,8 +18,10 @@ const fetchUser = ({ $auth, $firestore }, cb) => {
     })
 }
 
-export default ({ $auth, $firestore, store: { dispatch } }) => {
-    fetchUser({ $auth, $firestore }, (payload) => {
-        dispatch('user/updateUser', payload)
+export default (context) => {
+    const { store: { dispatch } } = context
+    fetchUser(context, (user) => {
+        dispatch('user/updateUser', user)
+        checkIfUserIsAdmin(context, user)
     })
 }

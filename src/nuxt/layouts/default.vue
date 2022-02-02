@@ -14,13 +14,21 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
+    middleware: 'adminAuth',
     async fetch () {
         await this.fetchMenu(this)
+        if (this.isAdmin) {
+            await this.fetchAdminData(this)
+        }
+    },
+    computed: {
+        ...mapState('user', { isAdmin: 'admin' })
     },
     methods: {
-        ...mapActions('menu', ['fetchMenu'])
+        ...mapActions('menu', ['fetchMenu']),
+        ...mapActions('admin', ['fetchAdminData'])
     }
 }
 </script>

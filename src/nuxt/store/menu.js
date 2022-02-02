@@ -9,25 +9,21 @@ export const state = () => ({
 export const actions = {
     async fetchMenu ({ commit, state }, { $firestore }) {
         if (state.cached.menu) { return }
+        const menuItems = {}
 
-        const cb = (snapshot) => {
-            const menuItems = {}
+        const menuDocsSnapshot = await getDocs($firestore.collection.menu)
 
-            snapshot.forEach((doc) => {
-                const docData = doc.data()
-                if (!docData.slug) { return }
-                const data = { ...docData, id: doc.id }
-                if (data.price) { data.priceString = formatPrice(data.price) }
+        menuDocsSnapshot.forEach((doc) => {
+            if (!doc.exists()) { return }
 
-                // TODO - Change slug to itemId
-                menuItems[docData.slug] = data
-            })
+            const data = { ...doc.data(), id: doc.id }
+            if (data.price) { data.priceString = formatPrice(data.price) }
 
-            commit('UPDATE_MENU_ITEMS', menuItems)
-            commit('UPDATE_CACHE_STATE', { key: 'menu', value: true })
-        }
+            menuItems[data.itemId] = data
+        })
 
-        await getDocs($firestore.collection.menu).then(cb)
+        commit('UPDATE_MENU_ITEMS', menuItems)
+        commit('UPDATE_CACHE_STATE', { key: 'menu', value: true })
     }
 }
 

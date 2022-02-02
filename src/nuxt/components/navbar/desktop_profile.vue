@@ -5,12 +5,13 @@
       offset-y
       open-on-hover
       rounded="b-lg"
-      nudge-left="15"
+      nudge-left="10"
+      transition="slide-y-transition"
       attach=""
     >
       <template #activator="{ on, attrs }">
-        <h4 v-bind="attrs" class="white--text font-weight-light" v-on="on">
-          Hi <b>{{ user.name }}</b>!
+        <h4 v-bind="attrs" class="white--text font-weight-light py-2" v-on="on">
+          Hi <b>{{ userName }}</b>!<i>{{ adminText }}</i>
         </h4>
       </template>
       <v-list>
@@ -47,6 +48,12 @@ export default {
     computed: {
         userExists () {
             return !!Object.keys(this.user).length
+        },
+        userName () {
+            return this.user?.name.split(' ')[0] || ''
+        },
+        adminText () {
+            return this.user.admin ? '- (Admin)' : ''
         }
     },
     methods: {

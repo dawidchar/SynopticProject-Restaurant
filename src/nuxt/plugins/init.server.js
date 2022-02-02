@@ -1,6 +1,7 @@
 import FireStoreParser from 'firestore-parser'
 import tryParseJson from '~/utils/tryParseJson'
 import { projectId } from '~/config/firebase.config.js'
+import checkIfUserIsAdmin from '~/utils/checkIfUserIsAdmin'
 
 const fetchUser = ({ req, $axios }) => {
     const firebaseUser = tryParseJson(req?.headers?.['firebase-user'])
@@ -16,8 +17,11 @@ const fetchUser = ({ req, $axios }) => {
     return Promise.reject(new Error('User Not Signed In'))
 }
 
-export default async ({ req, $axios, store: { dispatch, commit } }) => {
-    await fetchUser({ req, $axios }).then((user) => {
+export default async (context) => {
+    const { store: { dispatch } } = context
+
+    await fetchUser(context).then((user) => {
         dispatch('user/updateUser', user)
+        checkIfUserIsAdmin(context, user)
     }).catch(() => {})
 }

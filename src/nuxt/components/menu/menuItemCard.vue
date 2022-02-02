@@ -1,5 +1,5 @@
 <template>
-  <v-card width="275" class="menu-card d-flex flex-column">
+  <v-card width="275" class="d-flex flex-column">
     <v-card-title class="pb-0">
       {{ title }}
     </v-card-title>

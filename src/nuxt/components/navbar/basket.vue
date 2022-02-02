@@ -5,6 +5,7 @@
       open-on-hover
       :close-on-content-click="false"
       left
+      transition="slide-y-transition"
       attach=""
     >
       <template #activator="{ on, attrs }">

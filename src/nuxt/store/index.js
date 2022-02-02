@@ -3,8 +3,22 @@ import formatPrice from '~/utils/priceStringFormatter'
 
 export const state = () => ({
     ...appConfig
-
 })
+
+export const actions = {
+    enableAdminMode ({ commit, dispatch, state }, context) {
+        const { $vuetify } = context
+        if (!state.user.admin) {
+            dispatch('user/updateAdminState', true)
+            if (state.admin_config.profileButton) { commit('ADD_PROFILE_BUTTON', state.admin_config.profileButton) }
+        }
+
+        if (process.client) {
+            $vuetify.theme.themes.light = { ...$vuetify.theme.themes.light, ...state.admin_config.colorTheme.light }
+            $vuetify.theme.themes.dark = { ...$vuetify.theme.themes.dark, ...state.admin_config.colorTheme.dark }
+        }
+    }
+}
 
 export const getters = {
     basketMenuItems (state) {
@@ -24,10 +38,9 @@ export const getters = {
         return formatPrice(getters.basketMenuItems.reduce((prev, cur) => prev + cur.total, 0))
     }
 }
-export const actions = {}
 
 export const mutations = {
-    ADD_MENU_BUTTONS (state, payload) {
-        state.navbar?.menuButtons?.push(payload)
+    ADD_PROFILE_BUTTON (state, payload) {
+        state.navbar?.profileButtons?.unshift(payload)
     }
 }

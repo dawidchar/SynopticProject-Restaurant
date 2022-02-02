@@ -33,11 +33,6 @@ export default {
     computed: {
         ...mapState('user', { user: 'userData' }),
         ...mapState(['navbar', 'restaurantName'])
-    },
-    methods: {
-        signOut () {
-            console.log('Sign Out')
-        }
     }
 }
 </script>

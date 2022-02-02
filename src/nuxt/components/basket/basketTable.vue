@@ -54,17 +54,16 @@ export default {
         // - As viewport size is not available during SSR
         // Change default to desktop
         // TODO - Add Viewport data to cookie or service worker or use User Agents
-        mobileBreakpoint: 0
+        mobileBreakpoint: 0,
+        loading: true
     }),
     computed: {
-        ...mapGetters(['basketMenuItems', 'basketTotal']),
-        loading () {
-            return process.server
-        }
+        ...mapGetters(['basketMenuItems', 'basketTotal'])
     },
     mounted () {
         // Enable Mobile View after fixing SSR // 600 - Default Value
         this.mobileBreakpoint = 600
+        this.loading = false
     },
     methods: {
         ...mapActions('basket', ['updateItem']),
