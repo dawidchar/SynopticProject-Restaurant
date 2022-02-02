@@ -11,8 +11,8 @@
       :price="item.totalString"
       :quantity="item.quantity"
       :show-counter="true"
-      @addItem="addItem"
-      @removeItem="removeItem"
+      @incrementItem="incrementItem"
+      @decrementItem="decrementItem"
     />
     <div v-if="!isBasketEmpty">
       <v-divider inset class="mx-auto" />
@@ -45,10 +45,10 @@ export default {
     },
     methods: {
         ...mapActions('basket', ['updateItem']),
-        addItem (itemId) {
+        incrementItem (itemId) {
             this.updateItem({ itemId, delta: 1 })
         },
-        removeItem (itemId) {
+        decrementItem (itemId) {
             this.updateItem({ itemId, delta: -1 })
         }
     }

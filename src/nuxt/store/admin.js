@@ -7,7 +7,6 @@ export const state = () => ({
     orders: [],
     bookings: {},
     usersData: {},
-    cache: {},
     ordersTablePage: 0
 })
 
@@ -43,20 +42,16 @@ export const actions = {
     async fetchBookings ({ commit, rootState }, { $firestore }) {
         const bookings = []
 
-        const bookingColSnapshot = await getDocs(
-            $firestore.query.bookingsBetween(
-                getFirestoreTimestampFromToday(),
-                getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true)))
+        const bookingColSnapshot = await getDocs($firestore.query.bookingsBetween(
+            getFirestoreTimestampFromToday(),
+            getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true))).catch(() => {})
 
         bookingColSnapshot.forEach((doc) => {
-            console.log('doc')
             if (!doc.exists()) { return }
 
             const docData = { ...doc.data(), id: doc.id }
             bookings.push(docData)
         })
-
-        console.log(bookings)
 
         commit('UPDATE_BOOKINGS', bookings)
     }

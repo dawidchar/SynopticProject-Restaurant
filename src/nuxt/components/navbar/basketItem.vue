@@ -16,7 +16,7 @@
               class="mx-2"
               vertical
             />
-            <plusminusCounter :quantity="quantity" @addItem="$emit('addItem', itemId)" @removeItem="$emit('removeItem', itemId)" />
+            <plusminusCounter :quantity="quantity" @addItem="$emit('incrementItem', itemId)" @removeItem="$emit('decrementItem', itemId)" />
           </div>
         </div>
       </v-list-item-title>

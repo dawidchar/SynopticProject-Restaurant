@@ -10,7 +10,8 @@
       <navbarTitle :text="restaurantName" />
       <desktopMenu :items="navbar.menuButtons" />
       <v-col class="d-flex justify-end py-0">
-        <desktopProfile :user="user" :items="navbar.profileButtons" />
+        <!-- TODO - Move into Component -->
+        <desktopProfile :user="user" :logged-in="loggedIn" :items="navbar.profileButtons" />
         <basket />
       </v-col>
     </v-row>
@@ -32,6 +33,7 @@ export default {
     },
     computed: {
         ...mapState('user', { user: 'userData' }),
+        ...mapState('user', ['loggedIn']),
         ...mapState(['navbar', 'restaurantName'])
     }
 }

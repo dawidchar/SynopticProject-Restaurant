@@ -10,7 +10,8 @@ const firestoreCollectionRefs = ({ $db }) => {
 
 const firestoreUserRefs = ({ $db }) => {
     return {
-        user: uid => doc($db, 'users', uid)
+        user: uid => doc($db, 'users', uid),
+        userBasket: uid => doc($db, 'basket', uid)
     }
 }
 
@@ -22,8 +23,8 @@ const firestoreQueries = (context) => {
             limit(state.admin_config.dataTable.ordersPerPage)),
         bookingsBetween: (start, end) => query(firestoreCollectionRefs(context).bookings,
             orderBy('timestampStart'),
-            startAt(new Timestamp(start)),
-            endAt(new Timestamp(end)),
+            startAt(new Timestamp(start, 0)),
+            endAt(new Timestamp(end, 0)),
             limit(50)
         )
     }

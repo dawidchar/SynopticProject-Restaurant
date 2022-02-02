@@ -15,13 +15,13 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.15.1",
+    "debounce": "^1.2.1",
     "firebase": "^9.6.3",
     "firestore-parser": "^0.9.0",
     "moment": "^2.29.1",
     "nuxt": "^2.15.7",
     "vue-client-only": "^2.1.0",
-    "vuetify": "^2.5.5",
-    "vuex-persistedstate": "^4.1.0"
+    "vuetify": "^2.5.5"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.14.7",

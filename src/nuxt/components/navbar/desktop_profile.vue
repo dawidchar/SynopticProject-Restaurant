@@ -17,7 +17,7 @@
       <v-list>
         <nuxt-link :is="item.path ? 'router-link' : 'span'" v-for="(item, index) in items" :key="index" :to="item.path" @click="onClick(item.action)">
           <v-list-item link>
-            <v-list-item-title :class="`${item.color || 'blue'}--text`">
+            <v-list-item-title :class="`${item.color || 'info'}--text`">
               {{ item.text }}
             </v-list-item-title>
           </v-list-item>
@@ -40,6 +40,10 @@ export default {
             type: Object,
             default: () => ({})
         },
+        loggedIn: {
+            type: Boolean,
+            default: false
+        },
         items: {
             type: Array,
             default: () => ([])
@@ -47,7 +51,7 @@ export default {
     },
     computed: {
         userExists () {
-            return !!Object.keys(this.user).length
+            return this.loggedIn
         },
         userName () {
             return this.user?.name.split(' ')[0] || ''

@@ -5,7 +5,6 @@
     :items="basketMenuItems"
     :mobile-breakpoint="mobileBreakpoint"
     :items-per-page="-1"
-    :loading="loading"
     hide-default-footer
     class="elevation-1"
   >
@@ -17,13 +16,18 @@
       {{ item.priceString }}
     </template>
     <template #item.quantity="{ item }">
-      <plusminusCounter :quantity="item.quantity" @addItem="addItem(item.itemId)" @removeItem="removeItem(item.itemId)" />
+      <plusminusCounter :quantity="item.quantity" @addItem="incrementItem(item.itemId)" @removeItem="decrementItem(item.itemId)" />
     </template>
     <template #item.total="{ item }">
       {{ item.totalString }}
     </template>
-    <template slot="body.append">
-      <tr>
+    <template #item.remove="{ item }">
+      <v-btn icon @click="deleteItem(item.itemId)">
+        <v-icon>mdi-delete</v-icon>
+      </v-btn>
+    </template>
+    <template #body.append="{ isMobile }">
+      <tr :class="{'v-data-table__mobile-row': isMobile}">
         <th class="body-2 font-weight-bold">
           Total
         </th>
@@ -48,14 +52,14 @@ export default {
         headers: [{ text: 'Item', value: 'name' },
             { text: 'Price Per Item', value: 'price' },
             { text: 'Quantity', value: 'quantity' },
-            { text: 'Total', value: 'total' }
+            { text: 'Total', value: 'total' },
+            { text: 'Remove', value: 'remove', sortable: false, width: '25px', align: 'center' }
         ],
         // SSR renders mobile view by default
         // - As viewport size is not available during SSR
         // Change default to desktop
         // TODO - Add Viewport data to cookie or service worker or use User Agents
-        mobileBreakpoint: 0,
-        loading: true
+        mobileBreakpoint: 0
     }),
     computed: {
         ...mapGetters(['basketMenuItems', 'basketTotal'])
@@ -63,15 +67,17 @@ export default {
     mounted () {
         // Enable Mobile View after fixing SSR // 600 - Default Value
         this.mobileBreakpoint = 600
-        this.loading = false
     },
     methods: {
-        ...mapActions('basket', ['updateItem']),
-        addItem (itemId) {
+        ...mapActions('basket', ['updateItem', 'removeItem']),
+        incrementItem (itemId) {
             this.updateItem({ itemId, delta: 1 })
         },
-        removeItem (itemId) {
+        decrementItem (itemId) {
             this.updateItem({ itemId, delta: -1 })
+        },
+        deleteItem (itemId) {
+            this.removeItem(itemId)
         }
     }
 }

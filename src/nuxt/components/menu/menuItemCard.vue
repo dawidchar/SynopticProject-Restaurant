@@ -8,20 +8,28 @@
         {{ description }}
       </div>
     </v-card-text>
-    <v-card-actions class="px-3 mt-auto">
+    <v-card-actions class="px-3 mt-auto justify-space-between">
       <div class="text-subtitle-1 pt-1">
         {{ priceString }}
       </div>
-      <v-btn
-        color="secondary"
-        class="white--text ml-auto"
-        small
-        @click="addToBasket"
-      >
-        Add <v-icon right>
-          mdi-cart-plus
-        </v-icon>
-      </v-btn>
+      <v-tooltip bottom color="info" :disabled="loggedIn" attach="">
+        <template #activator="{ on, attrs }">
+          <div v-bind="attrs" v-on="on">
+            <v-btn
+              color="secondary"
+              class="white--text ml-auto"
+              small
+              :disabled="!loggedIn"
+              @click="addToBasket"
+            >
+              Add <v-icon right>
+                mdi-cart-plus
+              </v-icon>
+            </v-btn>
+          </div>
+        </template>
+        <span class="body-2">Please Sign In To Add Items</span>
+      </v-tooltip>
     </v-card-actions>
   </v-card>
 </template>
@@ -46,6 +54,10 @@ export default {
         price: {
             type: Number,
             required: true
+        },
+        loggedIn: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {

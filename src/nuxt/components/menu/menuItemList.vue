@@ -12,27 +12,23 @@
         :title="item.name"
         :description="item.description"
         :price="item.price"
+        :logged-in="loggedIn"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import menuItemCard from '~/components/menu/menuItemCard.vue'
 export default {
     components: {
         menuItemCard
     },
-    async fetch () {
-        await this.fetchMenu(this)
-    },
     computed: {
         ...mapState(['text']),
-        ...mapState('menu', { menuItems: 'items' })
-    },
-    methods: {
-        ...mapActions('menu', ['fetchMenu'])
+        ...mapState('menu', { menuItems: 'items' }),
+        ...mapState('user', ['loggedIn'])
     }
 }
 </script>

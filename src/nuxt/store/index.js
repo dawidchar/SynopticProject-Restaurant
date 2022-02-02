@@ -2,14 +2,19 @@ import appConfig from '~/config/app.config.js'
 import formatPrice from '~/utils/priceStringFormatter'
 
 export const state = () => ({
-    ...appConfig
+    ...appConfig,
+    initServerHydrated: false
 })
 
 export const actions = {
+    updateServerHydrationState ({ commit }, payload) {
+        commit('UPDATE_INIT_SERVER_HYDRATED', payload)
+    },
     enableAdminMode ({ commit, dispatch, state }, context) {
         const { $vuetify } = context
-        if (!state.user.admin) {
+        if (!state.user?.admin) {
             dispatch('user/updateAdminState', true)
+            dispatch('admin/fetchAdminData', context)
             if (state.admin_config.profileButton) { commit('ADD_PROFILE_BUTTON', state.admin_config.profileButton) }
         }
 
@@ -42,5 +47,8 @@ export const getters = {
 export const mutations = {
     ADD_PROFILE_BUTTON (state, payload) {
         state.navbar?.profileButtons?.unshift(payload)
+    },
+    UPDATE_INIT_SERVER_HYDRATED (state, payload) {
+        state.initServerHydrated = payload
     }
 }

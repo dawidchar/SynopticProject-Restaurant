@@ -12,7 +12,7 @@ export default Object.freeze({
         ],
         profileButtons: [
             { text: 'View Profile', path: '/profile' },
-            { text: 'Log Out', color: 'red', action: 'user/logout' }
+            { text: 'Log Out', color: 'error', action: 'user/logout' }
         ]
     },
     home_buttons: [
@@ -25,6 +25,9 @@ export default Object.freeze({
         bookingTimeInterval: 30,
         bookingDuration: 90,
         maxNumberOfPeople: 12
+    },
+    ordering: {
+        maxOfaSingleItem: 5
     },
     text: {
         // Home

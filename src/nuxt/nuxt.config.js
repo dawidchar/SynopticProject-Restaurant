@@ -31,7 +31,7 @@ export default {
         { src: '~/plugins/firestore.js' },
         { src: '~/plugins/init.server.js' },
         { src: '~/plugins/init.client.js' },
-        { src: '~/plugins/persistedState.js', mode: 'client' }
+        { src: '~/plugins/persistBasketFirestore.js', mode: 'client' }
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -66,7 +66,10 @@ export default {
                 light: {
                     primary: colorScheme.restaurant_turquoise,
                     secondary: colorScheme.restaurant_navy,
-                    accent: colorScheme.restaurant_gold
+                    accent: colorScheme.restaurant_gold,
+                    warning: colorScheme.restaurant_gold,
+                    info: colorScheme.restaurant_turquoise,
+                    error: colorScheme.restaurant_red
                 },
                 dark: {
                     primary: colors.blue.darken2,
