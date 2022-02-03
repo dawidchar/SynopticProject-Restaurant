@@ -8,7 +8,7 @@
       <updateDetailsForm class="ma-4 profileDetailsForm" @success="updateSuccess" @error="updateError" />
       <updatePasswordForm class="ma-4 passwordForm" @success="updateSuccess" @error="updateError" />
     </div>
-    <statusSnackbar :data="snackbarData" :visible="snackbarVisible" @close="closeSnackbar" />
+    <statusSnackbar :data="snackbarData" :visible.sync="snackbarVisible" />
   </div>
 </template>
 
@@ -46,9 +46,6 @@ export default {
             }
 
             this.snackbarVisible = true
-        },
-        closeSnackbar () {
-            this.snackbarVisible = false
         }
     }
 }

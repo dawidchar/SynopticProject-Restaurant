@@ -8,10 +8,11 @@ const firestoreCollectionRefs = ({ $db }) => {
     }
 }
 
-const firestoreUserRefs = ({ $db }) => {
+const firestoreDocRefs = ({ $db }) => {
     return {
         user: uid => doc($db, 'users', uid),
-        userBasket: uid => doc($db, 'basket', uid)
+        userBasket: uid => doc($db, 'basket', uid),
+        menuItem: docId => doc($db, 'menu', docId)
     }
 }
 
@@ -34,7 +35,7 @@ export default (context, inject) => {
     // Inject Firestore Collection & Document Refs
     inject('firestore', {
         collection: firestoreCollectionRefs(context),
-        doc: firestoreUserRefs(context),
+        doc: firestoreDocRefs(context),
         query: firestoreQueries(context)
     })
 }

@@ -57,7 +57,9 @@ export const mutations = {
 }
 
 export const getters = {
-    basketCount (state) {
-        return Object.values(state.items).reduce((prev, cur) => prev + cur.quantity, 0)
+    // TODO - Create action to remove deleted Items from User basket in DB when menu gets a snapshot update
+    // Below it just gets filtered out instead of being removed
+    basketCount (state, _, rootState) {
+        return Object.values(state.items).reduce((prev, cur) => (rootState.menu.items[cur.itemId] ? prev + cur.quantity : prev), 0)
     }
 }

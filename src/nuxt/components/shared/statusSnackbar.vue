@@ -1,6 +1,8 @@
 <template>
   <v-snackbar v-model="snackbar" :multi-line="true" :color="data.color" :timeout="data.timeout">
-    <div class="subtitle-1 font-weight-medium">{{ data.title }}</div>
+    <div class="subtitle-1 font-weight-medium">
+      {{ data.title }}
+    </div>
     <span class="body-2">{{ data.subtitle }}</span>
     <template #action="{ attrs }">
       <v-btn
@@ -32,7 +34,7 @@ export default {
                 return this.visible
             },
             set (val) {
-                if (!val) { this.$emit('close') }
+                if (!val) { this.$emit('update:visible') }
             }
         }
     }
