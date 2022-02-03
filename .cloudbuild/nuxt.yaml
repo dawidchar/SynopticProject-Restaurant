@@ -1,0 +1,16 @@
+steps:
+  # npm install
+  - name: "gcr.io/cloud-builders/npm"
+    id: nuxt-install
+    args: ["ci"]
+    dir: "./src/nuxt"
+  # run build
+  - name: "gcr.io/cloud-builders/npm"
+    id: nuxt-build
+    args: ["run", "build"]
+    dir: "./src/nuxt"
+  # Deploy to App Engine
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: deploy-app
+    args: ["app", "deploy", "app.yaml", "-v", "prod"]
+    dir: "./src/nuxt"

@@ -49,8 +49,11 @@ const context = {
 
 app.post('/booking', postBooking(context))
 app.post('/order', authenticatedMiddleware(context), postOrder(context))
-app.get('/ping', (req, res) => { res.send('pong') })
+app.use('/ping', (req, res) => { res.send('pong') })
+app.use('*', (req, res) => { res.status(404).send('Nothing Here') })
 
 if (isDev) {
     app.listen(PORT)
 }
+
+exports.api = app

@@ -1,0 +1,21 @@
+steps:
+  # npm install
+  - name: "gcr.io/cloud-builders/npm"
+    id: nuxt-install
+    args: ["ci"]
+    dir: "./src/api"
+  # Deploy as Cloud Function
+  - name: "gcr.io/cloud-builders/gcloud"
+    id: deploy-cloud-function
+    args:
+      - functions
+      - deploy
+      - api
+      - --allow-unauthenticated
+      - --region=europe-west2
+      - --source=.
+      - --trigger-http
+      - --runtime=nodejs14
+      - --max-instances=2
+      - --service-account=api-service-account@synoptic-project-restaurant.iam.gserviceaccount.com
+    dir: "./src/api"
