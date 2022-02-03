@@ -41,12 +41,12 @@ import { mapState } from 'vuex'
 import editMenuItemDialog from '~/components/admin/editMenuItemDialog.vue'
 import updateMenuItemService from '~/services/updateMenuItem.service'
 import deleteMenuItemService from '~/services/deleteMenuItem.service'
-import statusSnackbar from '~/components/shared/statusSnackbar.vue'
+import statusSnackbarMixin from '~/mixins/statusSnackbar.mixin'
 export default {
     components: {
-        editMenuItemDialog,
-        statusSnackbar
+        editMenuItemDialog
     },
+    mixins: [statusSnackbarMixin],
     data: () => ({
         headers: [
             { text: 'Item ID', value: 'itemId', width: '50px' },
@@ -60,9 +60,7 @@ export default {
         dialogTitle: '',
         tempItem: {},
         tempItemIsNew: false,
-        loading: false,
-        snackbarVisible: false,
-        snackbarData: {}
+        loading: false
     }),
     computed: {
         ...mapState('menu', ['items']),
@@ -101,7 +99,7 @@ export default {
                     color: 'error',
                     timeout: 5000
                 })
-            }).finally(this.loading = false)
+            }).finally(() => { this.loading = false })
         },
         updateItem (item) {
             this.loading = true
@@ -119,17 +117,7 @@ export default {
                     color: 'error',
                     timeout: 5000
                 })
-            }).finally(this.loading = false)
-        },
-        openSnackbar (payload) {
-            this.snackbarData = {
-                title: payload.title || '',
-                subtitle: payload.subtitle || '',
-                color: payload.color || 'info',
-                timeout: payload.timeout || 3000
-            }
-
-            this.snackbarVisible = true
+            }).finally(() => { this.loading = false })
         }
     }
 }

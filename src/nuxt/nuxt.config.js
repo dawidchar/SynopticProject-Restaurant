@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 import colorScheme from './config/colorScheme'
+import endpoints from './config/endpoints'
 
 export default {
     // Global page headers: https://go.nuxtjs.dev/config-head
@@ -18,6 +19,10 @@ export default {
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
         ]
+    },
+
+    publicRuntimeConfig: {
+        endpoints
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
@@ -53,7 +58,9 @@ export default {
     ],
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
-    axios: {},
+    axios: {
+        timeout: 1000
+    },
 
     // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
     vuetify: {

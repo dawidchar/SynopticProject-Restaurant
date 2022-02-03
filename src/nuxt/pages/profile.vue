@@ -16,17 +16,13 @@
 import { mapState } from 'vuex'
 import updateDetailsForm from '~/components/profile/updateDetailsForm.vue'
 import updatePasswordForm from '~/components/profile/updatePasswordForm.vue'
-import statusSnackbar from '~/components/shared/statusSnackbar.vue'
+import statusSnackbarMixin from '~/mixins/statusSnackbar.mixin'
 export default {
     components: {
         updateDetailsForm,
-        updatePasswordForm,
-        statusSnackbar
+        updatePasswordForm
     },
-    data: () => ({
-        snackbarVisible: false,
-        snackbarData: {}
-    }),
+    mixins: [statusSnackbarMixin],
     computed: {
         ...mapState(['text'])
     },
@@ -36,16 +32,6 @@ export default {
         },
         updateError (payload) {
             this.openSnackbar({ ...payload, color: 'error', timeout: 9000 })
-        },
-        openSnackbar (payload) {
-            this.snackbarData = {
-                title: payload.title || '',
-                subtitle: payload.subtitle || '',
-                color: payload.color || 'info',
-                timeout: payload.timeout || 3000
-            }
-
-            this.snackbarVisible = true
         }
     }
 }

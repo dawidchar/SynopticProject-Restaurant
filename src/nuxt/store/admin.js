@@ -44,7 +44,7 @@ export const actions = {
 
         const bookingColSnapshot = await getDocs($firestore.query.bookingsBetween(
             getFirestoreTimestampFromToday(),
-            getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true))).catch(() => {})
+            getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true))).catch(() => { })
 
         bookingColSnapshot.forEach((doc) => {
             if (!doc.exists()) { return }
@@ -58,13 +58,13 @@ export const actions = {
 }
 
 export const getters = {
-    getOrderData (state, _, rootState) {
+    getOrderData (state) {
         return state.orders.map(order => ({
             id: order.id,
             total: order.total,
             totalString: formatPrice(order.total),
             user: state.usersData[order.userId],
-            items: order.items.map(item => ({ ...rootState.menu.items[item.itemId], ...item, totalString: formatPrice(item.total) })),
+            items: order.items.map(item => ({ ...item, totalString: formatPrice(item.total) })),
             timestamp: order.timestamp.seconds,
             timestampString: formatFirebaseTimestampAsString(order.timestamp)
         }))

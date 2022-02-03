@@ -59,6 +59,9 @@ typings/
 # dotenv environment variables file
 .env
 
+# Secret/Key Files
+*.secret.*
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 
@@ -90,3 +93,5 @@ sw.*
 *.swp
 
 dist/
+
+.vscode/

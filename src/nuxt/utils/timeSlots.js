@@ -1,3 +1,5 @@
+// TODO - Consider using an alterntive instead - i.e. DayJS
+// https://momentjs.com/docs/#/-project-status/
 import moment from 'moment'
 
 export default (timeStart, timeEnd, interval) => {

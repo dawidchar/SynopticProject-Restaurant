@@ -8,15 +8,22 @@ export const state = () => ({
 export const actions = {
     updateItem ({ commit, state, rootState }, payload) {
         const itemId = payload.itemId
+        const menuItem = rootState.menu.items?.[itemId]
+
+        // Cancel If Item Does Not exist
+        // TODO - Add Logging
+        if (!menuItem) { return }
+
         const quantity = (payload.quantity || payload.quantity === 0)
             ? payload.quantity
             : (state.items[itemId]?.quantity || 0) + (payload.delta || 0)
+        const name = menuItem.name
 
         if (quantity <= 0) { return commit('REMOVE_ITEM', itemId) }
         if (quantity > rootState.ordering.maxOfaSingleItem ||
-            quantity > rootState.menu.items?.[itemId]?.stock) { return false }
+            quantity > menuItem.stock) { return false }
 
-        commit('UPDATE_ITEM', { itemId, quantity })
+        commit('UPDATE_ITEM', { itemId, quantity, name })
     },
     removeItem ({ commit }, itemId) {
         commit('REMOVE_ITEM', itemId)

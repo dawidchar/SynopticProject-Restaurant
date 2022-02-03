@@ -150,8 +150,8 @@ export default {
                     email: this.email,
                     numberOfPeople: this.numberOfPeople,
                     date: this.date,
-                    time: this.time
-
+                    time: this.time,
+                    duration: this.bookings.bookingDuration || 60
                 })
             }
         }

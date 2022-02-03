@@ -35,7 +35,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="_item.description"
-                :rules="[rules.required(), rules.min(3), rules.max(99)]"
+                :rules="[rules.max(99)]"
                 label="Item Description"
                 required
               />
@@ -126,7 +126,7 @@ export default {
                     id: this._item.id || false,
                     itemId: this._item.itemId.toLowerCase(),
                     name: this._item.name.trim(),
-                    description: this._item.name.trim(),
+                    description: (this._item.description || '').trim(),
                     price: parseInt(this._item.price),
                     stock: parseInt(this._item.stock)
                 }

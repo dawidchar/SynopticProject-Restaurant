@@ -13,7 +13,7 @@ const fetchUser = ({ req, $axios }) => {
         return $axios.$get(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/users/${firebaseUser.uid}`, {
             headers: { Authorization: `Bearer ${firebaseUser.token}` }
         }).then(userData => ({ ...FireStoreParser(userData.fields), ...firebaseUser })
-        ).catch(e => console.error('Failed to Fetch User - Server:', e.message))
+        ).catch(e => console.error(`Failed to Fetch User (${firebaseUser.uid}) - Server:`, e.message))
     }
     return Promise.reject(new Error('User Not Signed In'))
 }
@@ -22,13 +22,13 @@ const fetchUserBasket = ({ $axios }, user) => {
     return $axios.$get(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/basket/${user.uid}`, {
         headers: { Authorization: `Bearer ${user.token}` }
     }).then(userBasket => FireStoreParser(userBasket.fields)
-    ).catch(e => console.error("Failed to Fetch User's Basket - Server:", e.message))
+    ).catch(e => console.info(`Failed to Fetch User's Basket (${user.uid}) - Server:`, e.message))
 }
 
 export default async (context) => {
     const { store: { dispatch } } = context
 
-    const user = await fetchUser(context).catch(() => {})
+    const user = await fetchUser(context).catch(() => { })
 
     if (user) {
         dispatch('user/updateUser', user)
