@@ -44,4 +44,6 @@ export default (context) => {
     })
 
     if (!SSRHydrated) { dispatch('menu/fetchMenu', context) }
+
+    dispatch('menu/registerSnapshotListner', context)
 }

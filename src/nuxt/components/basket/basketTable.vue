@@ -12,11 +12,16 @@
       <span class="pl-2">{{ header.text }} </span>
     </template>
 
+    <template #item.name="{ item }">
+      <span>{{ item.name }}</span>
+      <span v-if="itemOutOfStock(item)" class="text-subtitle 2 error--text"> (No Stock)</span>
+      <span v-if="itemLowStock(item)" class="text-body-2 warning--text"> (Low Stock - <b>{{ item.stock }}</b>)</span>
+    </template>
     <template #item.price="{ item }">
       {{ item.priceString }}
     </template>
     <template #item.quantity="{ item }">
-      <plusminusCounter :quantity="item.quantity" @addItem="incrementItem(item.itemId)" @removeItem="decrementItem(item.itemId)" />
+      <plusminusCounter :quantity="item.quantity" :disabled="itemOutOfStock(item)" @addItem="incrementItem(item.itemId)" @removeItem="decrementItem(item.itemId)" />
     </template>
     <template #item.total="{ item }">
       {{ item.totalString }}
@@ -42,7 +47,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import plusminusCounter from '~/components/shared/plusminusCounter.vue'
 export default {
     components: {
@@ -62,6 +67,7 @@ export default {
         mobileBreakpoint: 0
     }),
     computed: {
+        ...mapState(['ordering']),
         ...mapGetters(['basketMenuItems', 'basketTotal'])
     },
     mounted () {
@@ -78,6 +84,12 @@ export default {
         },
         deleteItem (itemId) {
             this.removeItem(itemId)
+        },
+        itemOutOfStock (item) {
+            return item.stock === 0
+        },
+        itemLowStock (item) {
+            return item.stock !== 0 && item.stock < this.ordering.lowStockWarning
         }
     }
 }

@@ -10,6 +10,8 @@
       :item-id="item.itemId"
       :price="item.totalString"
       :quantity="item.quantity"
+      :stock="item.stock"
+      :low-stock-warning="ordering.lowStockWarning"
       :show-counter="true"
       @incrementItem="incrementItem"
       @decrementItem="decrementItem"
@@ -28,13 +30,14 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapState } from 'vuex'
 import basketItem from '~/components/navbar/basketItem.vue'
 export default {
     components: {
         basketItem
     },
     computed: {
+        ...mapState(['ordering']),
         ...mapGetters(['basketMenuItems', 'basketTotal']),
         isBasketEmpty () {
             return !this.basketMenuItems.length

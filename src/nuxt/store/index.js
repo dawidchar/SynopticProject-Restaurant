@@ -10,11 +10,11 @@ export const actions = {
     updateServerHydrationState ({ commit }, payload) {
         commit('UPDATE_INIT_SERVER_HYDRATED', payload)
     },
-    enableAdminMode ({ commit, dispatch, state }, context) {
+    async enableAdminMode ({ commit, dispatch, state }, context) {
         const { $vuetify } = context
         if (!state.user?.admin) {
             dispatch('user/updateAdminState', true)
-            dispatch('admin/fetchAdminData', context)
+            await dispatch('admin/fetchAdminData', context)
             if (state.admin_config.profileButton) { commit('ADD_PROFILE_BUTTON', state.admin_config.profileButton) }
         }
 
@@ -34,8 +34,8 @@ export const getters = {
                 // TODO - Add logging
                 if (!menuItem) { return null }
 
-                const total = menuItem.price * basketItem.quantity
-                const totalString = formatPrice(total)
+                const total = menuItem.stock ? menuItem.price * basketItem.quantity : 0
+                const totalString = menuItem.stock ? formatPrice(total) : 'N/A'
                 return { ...basketItem, ...menuItem, total, totalString }
             }).filter(item => item !== null)
     },

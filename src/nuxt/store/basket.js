@@ -8,10 +8,13 @@ export const state = () => ({
 export const actions = {
     updateItem ({ commit, state, rootState }, payload) {
         const itemId = payload.itemId
-        const quantity = (state.items[itemId]?.quantity || 0) + payload.delta
+        const quantity = (payload.quantity || payload.quantity === 0)
+            ? payload.quantity
+            : (state.items[itemId]?.quantity || 0) + (payload.delta || 0)
 
         if (quantity <= 0) { return commit('REMOVE_ITEM', itemId) }
-        if (quantity > rootState.ordering.maxOfaSingleItem) { return false }
+        if (quantity > rootState.ordering.maxOfaSingleItem ||
+            quantity > rootState.menu.items?.[itemId]?.stock) { return false }
 
         commit('UPDATE_ITEM', { itemId, quantity })
     },

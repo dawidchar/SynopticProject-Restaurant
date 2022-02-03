@@ -1,26 +1,33 @@
-import { getDocs } from 'firebase/firestore'
-import formatPrice from '~/utils/priceStringFormatter'
+import { getDocs, onSnapshot } from 'firebase/firestore'
+import extractMenuItemsFromSnapshot from '~/services/extractMenuItemsFromSnapshot'
 
 export const state = () => ({
-    items: {}
+    items: {},
+    timestamp: {}
 })
 
 export const actions = {
-    async fetchMenu ({ commit }, { $firestore }) {
-        const menuItems = {}
-
+    async fetchMenu ({ commit, dispatch }, { $firestore }) {
         const menuDocsSnapshot = await getDocs($firestore.collection.menu)
 
-        menuDocsSnapshot.forEach((doc) => {
-            if (!doc.exists()) { return }
-
-            const data = { ...doc.data(), id: doc.id }
-            if (data.price) { data.priceString = formatPrice(data.price) }
-
-            menuItems[data.itemId] = data
-        })
+        const menuItems = extractMenuItemsFromSnapshot(menuDocsSnapshot)
 
         commit('UPDATE_MENU_ITEMS', menuItems)
+        if (process.client) { dispatch('updateLowStockItemsInBasket') }
+    },
+    registerSnapshotListner ({ commit, dispatch }, { $firestore }) {
+        onSnapshot($firestore.collection.menu, (snapshot) => {
+            const menuItems = extractMenuItemsFromSnapshot(snapshot)
+            commit('UPDATE_MENU_ITEMS', menuItems)
+            dispatch('updateLowStockItemsInBasket')
+        })
+    },
+    updateLowStockItemsInBasket ({ dispatch, state, rootState }) {
+        Object.values(state.items).forEach((item) => {
+            if (item.stock && item.stock < rootState.basket.items?.[item.itemId]?.quantity) {
+                dispatch('basket/updateItem', { itemId: item.itemId, quantity: item.stock }, { root: true })
+            }
+        })
     }
 }
 

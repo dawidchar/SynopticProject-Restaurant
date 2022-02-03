@@ -16,10 +16,14 @@
               class="mx-2"
               vertical
             />
-            <plusminusCounter :quantity="quantity" @addItem="$emit('incrementItem', itemId)" @removeItem="$emit('decrementItem', itemId)" />
+            <plusminusCounter :quantity="quantity" :disabled="noStock" @addItem="$emit('incrementItem', itemId)" @removeItem="$emit('decrementItem', itemId)" />
           </div>
         </div>
       </v-list-item-title>
+      <v-list-item-subtitle>
+        <span v-if="noStock && showCounter" class="text-subtitle 2 error--text">No Stock</span>
+        <span v-if="lowStock && showCounter" class="text-body-2 warning--text"> (Low Stock - <b>{{ stock }}</b>)</span>
+      </v-list-item-subtitle>
     </v-list-item-content>
   </v-list-item>
 </template>
@@ -43,6 +47,14 @@ export default {
             type: [String, Number],
             default: ''
         },
+        stock: {
+            type: Number,
+            default: 0
+        },
+        lowStockWarning: {
+            type: Number,
+            default: 10
+        },
         quantity: {
             type: [String, Number],
             default: 0
@@ -62,6 +74,14 @@ export default {
         offsetRight: {
             type: Boolean,
             default: false
+        }
+    },
+    computed: {
+        noStock () {
+            return this.stock === 0
+        },
+        lowStock () {
+            return !this.noStock ? this.stock <= this.lowStockWarning : false
         }
     }
 }

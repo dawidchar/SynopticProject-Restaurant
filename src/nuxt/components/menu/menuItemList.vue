@@ -12,6 +12,8 @@
         :title="item.name"
         :description="item.description"
         :price="item.price"
+        :stock="item.stock"
+        :low-stock-warning="ordering.lowStockWarning"
         :logged-in="loggedIn"
       />
     </div>
@@ -26,7 +28,7 @@ export default {
         menuItemCard
     },
     computed: {
-        ...mapState(['text']),
+        ...mapState(['text', 'ordering']),
         ...mapState('menu', { menuItems: 'items' }),
         ...mapState('user', ['loggedIn'])
     }

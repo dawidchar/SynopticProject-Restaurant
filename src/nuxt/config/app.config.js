@@ -27,7 +27,8 @@ export default Object.freeze({
         maxNumberOfPeople: 12
     },
     ordering: {
-        maxOfaSingleItem: 5
+        maxOfaSingleItem: 5,
+        lowStockWarning: 10
     },
     text: {
         // Home
