@@ -2,8 +2,8 @@
 import colorScheme from '~/config/colorScheme'
 
 export default Object.freeze({
-    restaurantName: 'Restaurant',
-    restaurantSupportEmail: 'support@restaurant.com',
+    restaurantName: 'Le Restaurant',
+    restaurantSupportEmail: 'support@le-restaurant.com',
     navbar: {
         menuButtons: [
             { text: 'Menu', path: '/menu', tooltip: 'View the Menu' },
@@ -67,10 +67,13 @@ export default Object.freeze({
     },
     images: {
         home_carousel: [
-            'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-            'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-            'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-            'https://cdn.vuetifyjs.com/images/carousel/planet.jpg'
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/1.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/2.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/3.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/6.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/9i.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/9q.jpg',
+            'https://storage.googleapis.com/synopticproject_assets_bucket/images/9v.jpg'
         ]
     },
     admin_config: {
