@@ -26,6 +26,7 @@ setPersistence(auth, indexedDBLocalPersistence)
 // Inject services into Nuxt
 export default (_, inject) => {
     // Main Services
+    inject('firebaseApp', firebaseApp)
     inject('db', db)
     inject('auth', auth)
 }

@@ -1,3 +1,4 @@
+import { getPerformance } from 'firebase/performance'
 import { onAuthStateChanged } from 'firebase/auth'
 import { getDoc } from 'firebase/firestore'
 import getUserData from '~/utils/extractUserFromAuthUser'
@@ -28,8 +29,11 @@ const fetchUserBasket = ({ $firestore }, user) =>
         .then(docSnap => docSnap.data())
         .catch(e => console.error("Failed to Fetch User's Basket - Client:", e.message))
 
-export default (context) => {
-    const { store: { dispatch, state } } = context
+export default (context, inject) => {
+    const { store: { dispatch, state }, $firebaseApp } = context
+
+    const perf = getPerformance($firebaseApp)
+    inject('perf', perf)
 
     const SSRHydrated = state.initServerHydrated
 
