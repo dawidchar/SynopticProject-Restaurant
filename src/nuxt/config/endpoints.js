@@ -8,5 +8,5 @@ const forceProductionEndpoints = false
 const isDev = process.env.NODE_ENV !== 'production' && !forceProductionEndpoints
 
 export default {
-    api: isDev ? 'http://localhost:3300' : 'TBC'
+    api: isDev ? 'http://localhost:3300' : 'https://europe-west2-synoptic-project-restaurant.cloudfunctions.net/api'
 }
