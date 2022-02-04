@@ -3,7 +3,7 @@
 
 // If not set to true, when testing locally, features such as booking a table and
 // placing an order will not work
-const forceProductionEndpoints = false
+const forceProductionEndpoints = true
 
 const isDev = process.env.NODE_ENV !== 'production' && !forceProductionEndpoints
 
