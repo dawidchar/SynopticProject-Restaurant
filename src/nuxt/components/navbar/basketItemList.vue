@@ -19,7 +19,7 @@
     <div v-if="!isBasketEmpty">
       <v-divider inset class="mx-auto" />
       <basketItem
-        name="Total"
+        name="Sub-Total"
         :price="basketTotal"
         :bold-name="true"
         :bold-price="true"

@@ -1,4 +1,4 @@
-@startuml DoctorNowPlanDataModel
+@startuml DataModel
 package Users <<folder>> {
     class UserDocument <<(D,orchid)>> {
         #id: String
