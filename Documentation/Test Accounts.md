@@ -4,11 +4,11 @@
 
 ---
 
-<REMOVED EMAIL> <br>
-<REMOVED PASSOWRD>
+REMOVED EMAIL <br>
+REMOVED PASSWORD
 
-<REMOVED EMAIL> <br>
-<REMOVED PASSOWRD>
+REMOVED EMAIL <br>
+REMOVED PASSWORD
 
 _These can only be created by adding an admin flag directly in the database_
 
@@ -16,8 +16,8 @@ _These can only be created by adding an admin flag directly in the database_
 
 ---
 
-<REMOVED EMAIL><br>
-<REMOVED PASSOWRD>
+REMOVED EMAIL <br>
+REMOVED PASSWORD
 
 Feel free to create your own User Test Accounts; creating a new account should function without issue.
 
