@@ -10,6 +10,12 @@ https://synoptic-project-restaurant.nw.r.appspot.com/
 
 The Documentation can be found in the documentation folder at the root of this project.
 
+## Video Overview
+
+I also created a video showcasing this project, it’s a little long, but can be found at this URL, as it was too big too big to upload through Email
+
+https://drive.google.com/file/d/1eUhUXn82XrwyTQUV_L1x-HanG3o4UhoV/view?usp=sharing
+
 ## Configuring the Application
 
 The application is mostly config driven, so much of the text and values like the max number of a single item allowed per user can all be editied easily by editing the following file:
