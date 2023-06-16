@@ -15,8 +15,8 @@ if (!apps.length) {
 
 // ---- Initialize Services ---- //
 
-const db = getFirestore(firebaseApp, {})
-const auth = getAuth(firebaseApp, {})
+const db = getFirestore(firebaseApp)
+const auth = getAuth(firebaseApp)
 
 // ---- Configure Services ---- //
 

@@ -40,7 +40,7 @@ export default {
         ...mapState(['ordering']),
         ...mapGetters(['basketMenuItems', 'basketTotal']),
         isBasketEmpty () {
-            return !this.basketMenuItems.length
+            return !this.basketMenuItems?.length
         },
         listTitle () {
             return this.isBasketEmpty ? 'Your Basket Is Empty' : 'Basket'

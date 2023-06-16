@@ -6,7 +6,7 @@ export default (context) => {
         const splitMutation = mutation.type.split('/')
         if (splitMutation[0] === 'basket' &&
         !(splitMutation[1] || '').startsWith('LOCAL')) {
-            updateUserBasket(context, ({ items: state.basket.items }))
+            updateUserBasket(context, ({ items: state.basket.items })).catch(e => console.warn('Error updating basket: ', e))
         }
     })
 }

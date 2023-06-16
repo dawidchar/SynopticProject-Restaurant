@@ -1,44 +1,45 @@
-import FireStoreParser from 'firestore-parser'
 import tryParseJson from '~/utils/tryParseJson'
-import { projectId } from '~/config/firebase.config.js'
+import { fireAuthHeader } from '~/config/firebase.config.js'
 import checkIfUserIsAdmin from '~/utils/checkIfUserIsAdmin'
+import fetchUserByUID from '~/services/fetchUserByUID.service'
+import fetchUserBasketByUID from '~/services/fetchUserBasketByUID.service'
 
 // The Firebase JS libary does not support passing an auth token on the server
 // So for requests on the server, that require authentication
 // need to be done through the firebase REST Api
 
-const fetchUser = ({ req, $axios }) => {
-    const firebaseUser = tryParseJson(req?.headers?.['firebase-user'])
-    if (firebaseUser) {
-        return $axios.$get(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/users/${firebaseUser.uid}`, {
-            headers: { Authorization: `Bearer ${firebaseUser.token}` }
-        }).then(userData => ({ ...FireStoreParser(userData.fields), ...firebaseUser })
-        ).catch(e => console.error(`Failed to Fetch User (${firebaseUser.uid}) - Server:`, e.message))
-    }
-    return Promise.reject(new Error('User Not Signed In'))
+const fetchUser = (context) => {
+    const { $authUser, $authUser: { uid } = {} } = context
+    return uid
+        ? fetchUserByUID(context, uid).then(userData => ({ ...userData, ...$authUser })
+        ).catch(e => console.error('(Server) Failed To Fetch User - Error:', e))
+        : undefined
 }
 
-const fetchUserBasket = ({ $axios }, user) => {
-    return $axios.$get(`https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/basket/${user.uid}`, {
-        headers: { Authorization: `Bearer ${user.token}` }
-    }).then(userBasket => FireStoreParser(userBasket.fields)
-    ).catch(e => console.info(`Failed to Fetch User's Basket (${user.uid}) - Server:`, e.message))
+const fetchUserBasket = (context) => {
+    const { $authUser: { uid } = {} } = context
+    return fetchUserBasketByUID(context, uid).catch(e => console.error(`(Server) Failed To Fetch User's basket ${uid} - Error:`, e))
 }
 
-export default async (context) => {
-    const { store: { dispatch } } = context
+export default async (context, inject) => {
+    const { store: { dispatch }, req } = context
 
-    const user = await fetchUser(context).catch(() => { })
+    // Inject User Token in Logged In
+    const fireAuthUser = tryParseJson(req?.headers?.[fireAuthHeader])
+    inject('authUser', fireAuthUser)
+
+    const user = await fetchUser(context)
 
     if (user) {
         dispatch('user/updateUser', user)
-        if (checkIfUserIsAdmin(user)) { await dispatch('enableAdminMode', context) }
 
-        const userBasket = await fetchUserBasket(context, user)
+        if (checkIfUserIsAdmin(user)) { await dispatch('admin/enableAdminMode', context) }
+
+        const userBasket = await fetchUserBasket(context)
         if (userBasket) { await dispatch('basket/hydrateBasketFromDB', userBasket) }
+
+        dispatch('updateServerHydrationState', true)
     }
 
     await dispatch('menu/fetchMenu', context)
-
-    dispatch('updateServerHydrationState', true)
 }

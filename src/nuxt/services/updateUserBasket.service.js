@@ -1,5 +1,5 @@
 import { setDoc, serverTimestamp } from 'firebase/firestore'
-import debounce from 'debounce'
+import debounce from 'debounce-promise'
 
 const updateUserBasket = ({ store: nuxtStore, $store: vueStore, $firestore }, payload) => {
     // Because we call this service from a plugin, Nuxt passes store as as 'store'
@@ -9,7 +9,7 @@ const updateUserBasket = ({ store: nuxtStore, $store: vueStore, $firestore }, pa
 
     const userUID = $store.state.user?.userData?.uid
 
-    if (!userUID) { throw new Error("User Not Signed In, Can't update user profile") }
+    if (!userUID) { return Promise.reject(new Error("User Not Signed In, Can't update user basket")) }
 
     const DTO = { ...payload, timestamp: serverTimestamp() }
 

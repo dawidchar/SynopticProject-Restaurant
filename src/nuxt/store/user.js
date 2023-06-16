@@ -17,11 +17,13 @@ export const actions = {
     updateAdminState ({ commit }, payload) {
         commit('UPDATE_ADMIN_STATE', payload)
     },
-    async logout ({ commit, dispatch }, { $auth, $router }) {
-        if (!$auth) { throw new Error('VueX: User Logout - Missing $auth') }
+    async logout ({ state, commit, dispatch }, context) {
+        const { $auth, $router } = context
+        if (!$auth) { return Promise.reject(new Error('VueX: User Logout - Missing $auth')) }
         await signOut($auth)
         commit('UPDATE_USER_DATA', {})
         dispatch('basket/clearBasketItems', true, { root: true })
+        if (state.admin) { dispatch('admin/disableAdminMode', context, { root: true }) }
         $router.push('/')
     }
 }

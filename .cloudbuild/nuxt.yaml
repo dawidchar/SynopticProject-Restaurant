@@ -1,11 +1,13 @@
 steps:
   # npm install
-  - name: "gcr.io/cloud-builders/npm"
+  - name: node:16.19.1
+    entrypoint: yarn
     id: nuxt-install
-    args: ["ci"]
+    args: ["install", "--frozen-lockfile"]
     dir: "./src/nuxt"
   # run build
-  - name: "gcr.io/cloud-builders/npm"
+  - name: node:16.19.1
+    entrypoint: yarn
     id: nuxt-build
     args: ["run", "build"]
     dir: "./src/nuxt"

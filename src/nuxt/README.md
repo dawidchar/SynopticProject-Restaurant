@@ -1,4 +1,4 @@
-# mock_synoptic_project
+# synoptic_project
 
 ## Build Setup
 

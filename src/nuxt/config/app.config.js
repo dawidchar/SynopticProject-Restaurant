@@ -11,8 +11,8 @@ export default Object.freeze({
             { text: 'Contact', path: '/contact', tooltip: 'Contact Us' }
         ],
         profileButtons: [
-            { text: 'View Profile', path: '/profile' },
-            { text: 'Log Out', color: 'error', action: 'user/logout' }
+            { id: 'profile', text: 'View Profile', path: '/profile' },
+            { id: 'logout', text: 'Log Out', color: 'error', action: 'user/logout' }
         ]
     },
     home_buttons: [
@@ -77,7 +77,7 @@ export default Object.freeze({
         ]
     },
     admin_config: {
-        profileButton: { text: 'Admin Menu', color: 'text--darken-4 amber', path: '/admin' },
+        profileButton: { id: 'admin', text: 'Admin Menu', color: 'text--darken-4 amber', path: '/admin' },
         colorTheme: {
             light: {
                 primary: colorScheme.restaurant_red
@@ -85,7 +85,7 @@ export default Object.freeze({
             get dark () { return this.light }
         },
         dataTable: {
-            shopNumberOfLastOrders: 21,
+            showNumberOfLastOrders: 21,
             showBookingsDaysAhead: 2
         }
     },

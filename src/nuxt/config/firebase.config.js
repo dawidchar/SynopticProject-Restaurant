@@ -7,6 +7,8 @@ const config = {
     appId: '1:133311551901:web:734e394cb22f3fda2fb774'
 }
 
+export const fireAuthHeader = 'fireauth-user'
+
 export const apiKey = config.apiKey
 export const authDomain = config.authDomain
 export const projectId = config.projectId

@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth, onAuthStateChanged, getIdToken } from 'firebase/auth'
-import firebaseConfig from '~/config/firebase.config.js'
+import firebaseConfig, { fireAuthHeader } from '~/config/firebase.config.js'
+
 import getUserData from '~/utils/extractUserFromAuthUser'
 
 // https://firebase.google.com/docs/auth/web/service-worker-sessions
@@ -37,7 +38,7 @@ const fetchWithAuthorization = (original, firebaseUser) => {
     }
 
     // Add ID token to header.
-    headers.append('firebase-user', JSON.stringify(firebaseUser))
+    headers.append(fireAuthHeader, JSON.stringify(firebaseUser))
 
     // Create authorized request
     const { url, ...props } = original.clone()

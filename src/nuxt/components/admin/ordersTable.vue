@@ -2,7 +2,7 @@
   <v-container fluid>
     <v-data-iterator
       :items="ordersData"
-      :items-per-page="5"
+      :items-per-page="10"
     >
       <template #header>
         <h3 class="text-center">
@@ -38,7 +38,7 @@ export default {
         ...mapGetters('admin', { ordersData: 'getOrderData' }),
         ...mapState(['admin_config']),
         lastNumberOfOrders () {
-            return this.admin_config.dataTable.shopNumberOfLastOrders
+            return this.admin_config.dataTable.showNumberOfLastOrders
         }
     }
 }

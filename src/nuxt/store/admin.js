@@ -1,7 +1,10 @@
-import { getDocs, getDoc } from 'firebase/firestore'
 import formatPrice from '~/utils/priceStringFormatter'
 import formatFirebaseTimestampAsString from '~/utils/formatFirebaseTimestampAsString'
 import getFirestoreTimestampFromToday from '~/utils/getFirestoreTimestampFromToday'
+import fetchUserByUID from '~/services/fetchUserByUID.service'
+import fetchOrders from '~/services/fetchOrders.service'
+import fetchBookings from '~/services/fetchBookings.service'
+import ensureUnix from '~/utils/ensureUnix'
 
 export const state = () => ({
     orders: [],
@@ -10,48 +13,65 @@ export const state = () => ({
     ordersTablePage: 0
 })
 
+const vuetifyBackup = {}
+
 export const actions = {
-    async fetchAdminData ({ dispatch }, context) {
+    async enableAdminMode ({ commit, dispatch, rootState }, context) {
+        const { $vuetify } = context
+        if (!rootState.user?.admin) {
+            dispatch('user/updateAdminState', true, { root: true })
+            await dispatch('fetchAdminData', context)
+        }
+
+        if (process.client) {
+            if (rootState.admin_config.profileButton) { commit('ADD_PROFILE_BUTTON', rootState.admin_config.profileButton, { root: true }) }
+
+            vuetifyBackup.light = { ...$vuetify.theme.themes.light }
+            vuetifyBackup.dark = { ...$vuetify.theme.themes.dark }
+            $vuetify.theme.themes.light = { ...$vuetify.theme.themes.light, ...rootState.admin_config.colorTheme.light }
+            $vuetify.theme.themes.dark = { ...$vuetify.theme.themes.dark, ...rootState.admin_config.colorTheme.dark }
+        }
+    },
+    disableAdminMode ({ commit, rootState }, context) {
+        const { $vuetify } = context
+
+        $vuetify.theme.themes.light = vuetifyBackup.light
+        $vuetify.theme.themes.dark = vuetifyBackup.dark
+
+        commit('UPDATE_ORDERS', [])
+        commit('UPDATE_BOOKINGS', {})
+        commit('UPDATE_USERS_DATA', {})
+
+        commit('REMOVE_PROFILE_BUTTON', rootState.admin_config.profileButton.id, { root: true })
+    },
+    async fetchAdminData ({ dispatch, state }, context) {
         await dispatch('fetchOrders', context)
         await dispatch('fetchBookings', context)
     },
-    async fetchOrders ({ commit, state }, { $firestore }) {
+    async fetchOrders ({ commit, state }, context) {
         const orders = []
         const userPromises = []
 
-        const orderColSnapshot = await getDocs($firestore.query.orders)
+        const ordersArray = await fetchOrders(context).catch(e => console.error(e))
 
-        orderColSnapshot.forEach((doc) => {
-            if (!doc.exists()) { return }
+        ordersArray.forEach((doc) => {
+            orders.push(doc)
 
-            const docData = { ...doc.data(), id: doc.id }
-            orders.push(docData)
-
-            if (!state.usersData[docData.userId]) {
-                userPromises.push(getDoc($firestore.doc.user(docData.userId)).then((userDocSnap) => {
-                    if (!userDocSnap.exists()) { return }
-
-                    commit('UPDATE_USERS_DATA', { ...userDocSnap.data(), id: userDocSnap.id })
-                }))
+            if (!state.usersData[doc.userId]) {
+                userPromises.push(fetchUserByUID(context, doc.userId).then(user => commit('UPDATE_USERS_DATA', { ...user, id: doc.userId })))
             }
         })
 
         commit('UPDATE_ORDERS', orders)
         await Promise.all(userPromises)
     },
-    async fetchBookings ({ commit, rootState }, { $firestore }) {
+    async fetchBookings ({ commit, rootState }, context) {
         const bookings = []
-
-        const bookingColSnapshot = await getDocs($firestore.query.bookingsBetween(
+        const bookingsArray = await fetchBookings(context,
             getFirestoreTimestampFromToday(),
-            getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true))).catch(() => { })
+            getFirestoreTimestampFromToday({ days: rootState.admin_config.dataTable.showBookingsDaysAhead }, true)).catch(e => console.error(e)) || []
 
-        bookingColSnapshot.forEach((doc) => {
-            if (!doc.exists()) { return }
-
-            const docData = { ...doc.data(), id: doc.id }
-            bookings.push(docData)
-        })
+        bookingsArray.forEach(doc => bookings.push(doc))
 
         commit('UPDATE_BOOKINGS', bookings)
     }
@@ -65,7 +85,7 @@ export const getters = {
             totalString: formatPrice(order.total),
             user: state.usersData[order.userId],
             items: order.items.map(item => ({ ...item, totalString: formatPrice(item.total) })),
-            timestamp: order.timestamp.seconds,
+            timestamp: ensureUnix(order.timestamp),
             timestampString: formatFirebaseTimestampAsString(order.timestamp)
         }))
     }

@@ -1,0 +1,69 @@
+rules_version = '2';
+service cloud.firestore {
+    match /databases/{database}/documents {
+
+        function userLoggedIn() {
+            return request.auth != null;
+        }
+
+        function userUID() {
+            return request.auth.uid;
+        }
+
+        function userDocExists() {
+            return userLoggedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        }
+
+        function requestHasData() {
+            return request.resource != null && request.resource.data != null;
+        }
+
+        // Function to check if a user is an admin
+        function isAdmin() {
+            return userDocExists() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.admin == true;
+        }
+
+        function isCurrentUser(requestedUID) {
+            return userLoggedIn() && userUID() == requestedUID;
+        }
+
+        match /{document=**} {
+            allow read, write: if isAdmin();
+        }
+
+        match /users/{userId} {
+            // Functions
+            function areValidFields(keys) {
+                return keys.hasOnly(['name', 'email']);
+            }
+
+            // Function to check if only valid fields are affected by the update
+            function validFieldsOnlyDiff() {
+                return requestHasData() && areValidFields(request.resource.data.diff(resource.data).affectedKeys());
+            }
+
+            // Function to check if the request contains only valid fields
+            function validFieldsOnly() {
+                return requestHasData() && areValidFields(request.resource.data.keys());
+            }
+
+            // User Perms
+            allow get: if isCurrentUser(userId);
+            allow update: if isCurrentUser(userId) && validFieldsOnlyDiff();
+            allow create: if validFieldsOnly();
+        }
+
+        match /basket/{userId} {
+            allow read, write: if isCurrentUser(userId);
+        }
+
+        match /menu/{document=**} {  
+            allow read: if true;
+        }
+
+        match /bookings/{document=**} {  
+            allow create: if true;
+        }
+
+    }
+}

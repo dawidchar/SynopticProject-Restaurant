@@ -9,19 +9,6 @@ export const state = () => ({
 export const actions = {
     updateServerHydrationState ({ commit }, payload) {
         commit('UPDATE_INIT_SERVER_HYDRATED', payload)
-    },
-    async enableAdminMode ({ commit, dispatch, state }, context) {
-        const { $vuetify } = context
-        if (!state.user?.admin) {
-            dispatch('user/updateAdminState', true)
-            await dispatch('admin/fetchAdminData', context)
-            if (state.admin_config.profileButton) { commit('ADD_PROFILE_BUTTON', state.admin_config.profileButton) }
-        }
-
-        if (process.client) {
-            $vuetify.theme.themes.light = { ...$vuetify.theme.themes.light, ...state.admin_config.colorTheme.light }
-            $vuetify.theme.themes.dark = { ...$vuetify.theme.themes.dark, ...state.admin_config.colorTheme.dark }
-        }
     }
 }
 
@@ -46,7 +33,10 @@ export const getters = {
 
 export const mutations = {
     ADD_PROFILE_BUTTON (state, payload) {
-        state.navbar?.profileButtons?.unshift(payload)
+        state.navbar.profileButtons.unshift(payload)
+    },
+    REMOVE_PROFILE_BUTTON (state, id) {
+        state.navbar.profileButtons = state.navbar.profileButtons.filter(item => item.id !== id)
     },
     UPDATE_INIT_SERVER_HYDRATED (state, payload) {
         state.initServerHydrated = payload
