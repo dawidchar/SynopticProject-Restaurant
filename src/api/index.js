@@ -5,6 +5,17 @@ const admin = require('firebase-admin')
 const express = require('express')
 const cors = require('cors')
 const bodyParser = require('body-parser')
+const logger = require('pino')({
+    formatters: {
+        level(label) {
+            return { severity: label.toUpperCase() };
+        }
+    },
+    messageKey: 'message',
+    base: null, // No need for pid, hostname
+    nestedKey: 'data',
+    timestamp: () => `,"time":"${(new Date()).toISOString()}"`,
+}).child({ enviroment: process.env.NODE_ENV })
 
 const authenticatedMiddleware = require('./middleware/authenticated')
 const { postBooking } = require('./services/booking.js')
@@ -12,11 +23,13 @@ const { postOrder } = require('./services/order.js')
 
 const isDev = process.env.NODE_ENV !== 'production'
 
+logger.warn({ test: 123 }, "TEST")
+
 // ---- Firebase Setup ---- //
 try {
     admin.initializeApp();
 } catch (e) {
-    console.error(chalk.red.bold.underline('Failed to Initialize Admin SDK -'), e.message)
+    logger.error(chalk.red.bold.underline(`Failed to Initialize Admin SDK - ${e.message}`))
     if (isDev) { throw error }
     process.exit(1)
 }
@@ -39,6 +52,7 @@ const context = {
     app,
     db,
     auth,
+    logger,
     dayjs,
     dbTimestamp: admin.firestore.Timestamp,
     serverTimestamp: admin.firestore.FieldValue.serverTimestamp(),

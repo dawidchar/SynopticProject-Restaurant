@@ -1,4 +1,4 @@
-const postBooking = ({ db, dbTimestamp, dayjs }) => async (req, res) => {
+const postBooking = ({ db, dbTimestamp, dayjs, logger }) => async (req, res) => {
     const payload = req.body
     if (!payload && typeof payload !== 'object') {
         res.sendStatus(400)
@@ -18,13 +18,13 @@ const postBooking = ({ db, dbTimestamp, dayjs }) => async (req, res) => {
         timestampEnd: dbTimestamp.fromMillis(timestampEnd.valueOf()),
     }
 
-    console.info(`Booked Table for ${DTO.name}`, DTO)
+    logger.info(DTO, `Booked Table for ${DTO.name}`)
 
     db.collection('bookings').add(DTO).then(() => {
         res.send('Success')
     }).catch((e) => {
         res.status(500).send('An Error Occured Saving your Booking')
-        console.error('Error Occured Creating a Booking document')
+        logger.error('Error Occured Creating a Booking document')
         throw new Error(e)
     })
 }

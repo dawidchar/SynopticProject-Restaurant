@@ -1,4 +1,4 @@
-const postOrder = ({ db, serverTimestamp, fieldIncrement }) => async (req, res) => {
+const postOrder = ({ db, logger, serverTimestamp, fieldIncrement }) => async (req, res) => {
     const payload = req.body
     const authUser = res.locals.user
     if (!payload && typeof payload !== 'object') {
@@ -22,7 +22,7 @@ const postOrder = ({ db, serverTimestamp, fieldIncrement }) => async (req, res) 
             querySnap => !querySnap.empty ? ({ ...querySnap.docs[0].data(), id: querySnap.docs[0].id }) : undefined).catch(() => undefined)
 
         if (!menuItem) {
-            console.error(`Can't Find Menu Item - ${basketItem.itemId}`)
+            logger.error(`Can't Find Menu Item - ${basketItem.itemId}`)
             return null
         }
 
@@ -47,14 +47,14 @@ const postOrder = ({ db, serverTimestamp, fieldIncrement }) => async (req, res) 
     DTO.items = userMenuItems
     DTO.total = basketTotal
 
-    console.info(`${DTO.userId} Placed an Order`, DTO)
+    logger.info(DTO, `${DTO.userId} Placed an Order`)
 
     await db.collection('basket').doc(authUser.uid).delete().catch((e) => {
-        console.error(`Failed to Delete user basket - ${DTO.uid}`, e)
+        logger.error(e, `Failed to Delete user basket - ${DTO.uid}`)
     })
 
     await db.collection('orders').add(DTO).catch((e) => {
-        console.error(`Failed to Create user Order - ${DTO.uid}`, e)
+        logger.error(e, `Failed to Create user Order - ${DTO.uid}`)
     })
 
     res.send('Success')
