@@ -33,15 +33,19 @@
         />
 
         <v-col cols="8" md="6">
-          <v-select
-            v-model="numberOfPeople"
-            :rules="[rules.required()]"
-            :items="numOfPeopleList"
-            item-text="text"
-            item-value="value"
-            label="Number of People*"
-            required
-          />
+          <client-only>
+            <v-select
+              v-model="numberOfPeople"
+              :rules="[rules.required()]"
+              :items="numOfPeopleList"
+              item-text="text"
+              item-value="value"
+              label="Number of People*"
+              required
+            />
+
+            <v-text-field slot="placeholder" label="Number of People*" />
+          </client-only>
         </v-col>
 
         <v-col cols="8" md="6">
@@ -73,13 +77,16 @@
         </v-col>
 
         <v-col cols="8" md="6">
-          <v-select
-            v-model="time"
-            :rules="[rules.required()]"
-            :items="timeSlots"
-            label="Time*"
-            required
-          />
+          <client-only>
+            <v-select
+              v-model="time"
+              :rules="[rules.required()]"
+              :items="timeSlots"
+              label="Time*"
+              required
+            />
+            <v-text-field slot="placeholder" label="Time*" />
+          </client-only>
         </v-col>
       </v-row>
 

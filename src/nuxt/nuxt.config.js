@@ -27,7 +27,9 @@ export default {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [
-        '~/assets/index.scss'
+        '~/assets/index.scss',
+        '~/assets/v-card.css',
+        '~/assets/v-input.css'
     ],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
