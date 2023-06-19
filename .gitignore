@@ -95,3 +95,8 @@ sw.*
 dist/
 
 .vscode/
+
+### Custom
+
+# Secrets
+firebase-prod-config.json

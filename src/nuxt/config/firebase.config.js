@@ -1,10 +1,18 @@
-const config = {
-    apiKey: 'AIzaSyAhuDyOUu50oSCTHxK9zKHlQrd6FkRUlKc',
+let firebaseProdConfig
+
+if (process.env.NODE_ENV === 'production') {
+    try {
+        firebaseProdConfig = require('./firebase-prod-config.json')
+    } catch (error) { console.error(`Error Loading Prod Firebase Config - ${error.message}`) }
+}
+
+const config = firebaseProdConfig || {
+    apiKey: 'AIzaSyAQfwi8gibNLkjm4NHG1R-MD4qFmxI3wYc',
     authDomain: 'synoptic-project-restaurant.firebaseapp.com',
     projectId: 'synoptic-project-restaurant',
     storageBucket: 'synoptic-project-restaurant.appspot.com',
     messagingSenderId: '133311551901',
-    appId: '1:133311551901:web:734e394cb22f3fda2fb774'
+    appId: '1:133311551901:web:2264499492217b822fb774'
 }
 
 export const fireAuthHeader = 'fireauth-user'

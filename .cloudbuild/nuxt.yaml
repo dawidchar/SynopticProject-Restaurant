@@ -1,4 +1,13 @@
 steps:
+  # fetch prod config
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: firebase-prod-config
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      gcloud secrets versions access latest --secret=firebase-prod-config > firebase-prod-config.json
+    dir: "./src/nuxt/config"
   # npm install
   - name: node:16.19.1
     entrypoint: yarn
