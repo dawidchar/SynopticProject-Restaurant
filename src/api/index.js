@@ -23,8 +23,6 @@ const { postOrder } = require('./services/order.js')
 
 const isDev = process.env.NODE_ENV !== 'production'
 
-logger.warn({ test: 123 }, "TEST")
-
 // ---- Firebase Setup ---- //
 try {
     admin.initializeApp();
