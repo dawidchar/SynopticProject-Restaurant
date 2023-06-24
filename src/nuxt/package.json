@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "npm run webpack && nuxt",
-    "build": "npm run webpack && nuxt build",
+    "build": "npm run webpack:prod && nuxt build",
     "start": "nuxt start",
     "webpack": "webpack --config=webpack.config.js",
+    "webpack:prod": "webpack --config=webpack.config.js --mode production",
     "generate": "npm run webpack && nuxt generate",
     "lint:js": "eslint --ext \".js,.vue\" --ignore-path .gitignore .",
     "lint": "npm run lint:js",
